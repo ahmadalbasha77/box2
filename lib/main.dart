@@ -24,6 +24,8 @@ void main() async{
 
   try {
     await Firebase.initializeApp();
+    await FirebaseMessaging.instance.requestPermission();
+
     String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
     if (apnsToken == null) {
     } else {
