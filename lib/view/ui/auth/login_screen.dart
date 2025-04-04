@@ -67,16 +67,16 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 15),
                   const SignUpButton(),
                   const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Login as a guest",
-                      style: TextStyle(
-                          color: AppColor.primaryColor2,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {},
+                  //   child: const Text(
+                  //     "Login as a guest",
+                  //     style: TextStyle(
+                  //         color: AppColor.primaryColor2,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

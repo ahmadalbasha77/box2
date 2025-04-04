@@ -4,6 +4,7 @@ import 'package:box_app/core/binding.dart';
 import 'package:box_app/core/my_shared_preferences.dart';
 import 'package:box_app/core/theme_app.dart';
 import 'package:box_app/view/ui/splash.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,12 @@ void main() async{
   MessagingConfig.init();
   FirebaseMessagingConfig.onMessage();
 
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

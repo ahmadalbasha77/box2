@@ -1,4 +1,4 @@
-package com.shop.box_app
+package com.box.jo_app
 
 import io.flutter.embedding.android.FlutterActivity
 

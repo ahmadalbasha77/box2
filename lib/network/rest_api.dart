@@ -136,7 +136,7 @@ class RestApi {
     required int pageIndex,
   }) async {
     String url =
-        '${ApiUrl.baseUrl}${ApiUrl.getOrder}?PageSize=$pageSize&PageNumber=$pageIndex';
+        '${ApiUrl.baseUrl}${ApiUrl.getOrder}?PageSize=$pageSize&PageNumber=$pageIndex&userId=${mySharedPreferences.userId}';
     Uri uri = Uri.parse(url);
     var headers = {
       'accept': 'text/plain',
