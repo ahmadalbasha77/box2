@@ -1,0 +1,31 @@
+import 'package:box_app/controller/home/brand_controller.dart';
+import 'package:box_app/model/home/brand_model.dart';
+import 'package:box_app/view/widget/home/brand_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+class BrandListWidget extends StatelessWidget {
+  BrandListWidget({super.key});
+
+  final _controller = BrandController.to;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<BrandController>(builder: (logic) {
+      return SizedBox(
+        height: 120,
+        child: PagedListView<int, BrandDate>(
+          scrollDirection: Axis.horizontal,
+          pagingController: logic.pagingController,
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          builderDelegate: PagedChildBuilderDelegate<BrandDate>(
+            itemBuilder: (context, item, index) {
+              return BrandWidget(data: item);
+            },
+          ),
+        ),
+      );
+    });
+  }
+}

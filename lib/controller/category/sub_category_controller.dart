@@ -1,0 +1,90 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:box_app/model/home/sub_category_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../../network/rest_api.dart';
+
+class SubCategoryController extends GetxController {
+  static SubCategoryController get to =>
+      Get.isRegistered<SubCategoryController>()
+          ? Get.find<SubCategoryController>()
+          : Get.put(SubCategoryController());
+
+  final TextEditingController controllerSearch = TextEditingController();
+  final Rxn<Timer> searchOnStoppedTyping = Rxn<Timer>();
+
+  PagingController<int, SubCategoryData> pagingController =
+      PagingController(firstPageKey: 0);
+  int currentPageSize = 0;
+  int categoryId = -1;
+
+  @override
+  void onInit() {
+    super.onInit();
+    categoryId = Get.arguments['id'];
+    log('categoryId : $categoryId');
+    pagingController.addPageRequestListener((pageKey) {
+      getSubCategory(pageKey: pageKey);
+    });
+
+    controllerSearch.addListener(searchOnChange);
+  }
+
+  void getSubCategory({required int pageKey}) async {
+    try {
+      currentPageSize++;
+      final result = await RestApi.getSubCategory(
+          pageSize: 10,
+          pageIndex: currentPageSize,
+          search: controllerSearch.text,
+          categoryId: categoryId);
+
+      if (result.data.items.isNotEmpty) {
+        final List<SubCategoryData> flatList = result.data.items;
+        final isLastPage = flatList.length < 5;
+        if (isLastPage) {
+          pagingController.appendLastPage(flatList);
+        } else {
+          pagingController.appendPage(flatList, pageKey + flatList.length);
+        }
+      } else {
+        pagingController.appendLastPage([]);
+      }
+    } catch (error) {
+      pagingController.error = error;
+    }
+  }
+
+  void searchOnChange() {
+    if (searchOnStoppedTyping.value != null) {
+      searchOnStoppedTyping.value!.cancel();
+    }
+    searchOnStoppedTyping.value = Timer(const Duration(milliseconds: 300), () {
+      refreshScreen();
+    });
+  }
+
+  void refreshScreen() {
+    currentPageSize = 0;
+    pagingController.refresh();
+  }
+
+  void refreshPagingController() {
+    pagingController = PagingController(firstPageKey: 0);
+    currentPageSize = 0;
+    pagingController.addPageRequestListener((pageKey) {
+      getSubCategory(pageKey: pageKey);
+    });
+  }
+
+  @override
+  void dispose() {
+    controllerSearch.dispose();
+    searchOnStoppedTyping.value?.cancel();
+    super.dispose();
+  }
+}
