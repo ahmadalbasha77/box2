@@ -152,7 +152,7 @@
                   leading: const Icon(Icons.login),
                   title:  Text('تسجيل دخول'.tr),
                   onTap: () async {
-                    return Get.to(() => LoginScreen());
+                    return Get.to(() => LoginScreen(isOpen: true,));
                     // Implement logout
                   },
                 ),
