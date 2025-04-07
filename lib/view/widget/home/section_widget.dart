@@ -17,13 +17,13 @@ class SectionWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: bold18.copyWith(color: AppColor.primaryColor)),
+          Text(title.tr, style: bold18.copyWith(color: AppColor.primaryColor)),
           if (actionText != null)
             TextButton(
               onPressed: () {
                 Get.to(() =>  CategoryScreen());
               },
-              child: Text(actionText!,
+              child: Text(actionText!.tr,
                   style: regular14.copyWith(color: AppColor.primaryColor)),
             )
         ],

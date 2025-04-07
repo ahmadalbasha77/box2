@@ -12,8 +12,9 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'core/messaging_config.dart';
+import 'core/translations/translations.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await mySharedPreferences.init();
   await Permission.notification.isDenied.then((value) {
@@ -54,7 +55,9 @@ class MyApp extends StatelessWidget {
       theme: themeApp,
       initialBinding: InitialBinding(),
       debugShowCheckedModeBanner: false,
-      locale: const Locale('ar'),
+      translations: Translation(),
+      locale: Locale(mySharedPreferences.language),
+      fallbackLocale: const Locale('ar'),
       home: const Splash(),
     );
   }

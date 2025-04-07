@@ -18,6 +18,12 @@ class LoginController extends GetxController {
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  bool isObsecure = true;
+
+  void togglePassword() {
+    isObsecure = !isObsecure;
+    update();
+  }
   void login() async {
     if (formKey.currentState!.validate()) {
       try {
@@ -36,12 +42,17 @@ class LoginController extends GetxController {
           mySharedPreferences.isLogin = true;
           mySharedPreferences.token = result.data.token;
           mySharedPreferences.userName = result.data.username;
+          print('**************************************');
+          print(result.data.username);
+          print(mySharedPreferences.userName);
+          print('**************************************');
+
           mySharedPreferences.userId = result.data.userId;
           mySharedPreferences.email = result.data.email;
           // mySharedPreferences.saveUserData(result.data);
           Get.offAll(() => const NavBarScreen());
         } else {
-          Utils.showSnackbar('Please try again', result.message);
+          Utils.showSnackbar('Please try again', 'email or password is incorrect');
         }
       } catch (e) {
         Utils.hideLoadingDialog();

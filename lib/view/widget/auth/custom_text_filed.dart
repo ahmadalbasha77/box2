@@ -1,5 +1,6 @@
 import 'package:box_app/core/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/app_color.dart';
 
@@ -42,7 +43,7 @@ class CustomTextFiled extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           suffixIcon: suffixIcon,
-          labelText: label,
+          labelText: label.tr,
           prefixIcon: Icon(icon, color: AppColor.primaryColor2),
           border: InputBorder.none,
           contentPadding:

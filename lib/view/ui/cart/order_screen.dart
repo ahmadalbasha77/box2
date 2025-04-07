@@ -16,7 +16,7 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('طلباتي'),
+          title:  Text('طلباتي'.tr),
           centerTitle: true,
         ),
         body: GetBuilder<OrderController>(builder: (logic) {
@@ -51,7 +51,7 @@ class OrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'طلب رقم: ${order.id}',
+                  '${'طلب رقم'.tr}: ${order.id}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -64,7 +64,7 @@ class OrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('عدد المنتجات: ${order.cartItems.length}'),
+                Text('${'عدد المنتجات'.tr}: ${order.cartItems.length}'),
                 _buildStatusBadge(order.cartStatus),
               ],
             ),
@@ -73,8 +73,8 @@ class OrderCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'الإجمالي',
+                 Text(
+                  'الإجمالي'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -96,7 +96,7 @@ class OrderCard extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
-                child: const Text('عرض التفاصيل'),
+                child:  Text('عرض التفاصيل'.tr),
               ),
             ),
           ],
@@ -145,7 +145,8 @@ class OrderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        statusText,
+        statusText.tr
+        ,
         style: TextStyle(color: textColor),
       ),
     );

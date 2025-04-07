@@ -38,7 +38,7 @@ class MySharedPreferences {
     _sharedPreferences.setBool(keyIsLogin, value);
   }
 
-  String get language => _sharedPreferences.getString(keyLanguage) ?? "en";
+  String get language => _sharedPreferences.getString(keyLanguage) ?? "ar";
 
   set language(String value) {
     _sharedPreferences.setString(keyLanguage, value);

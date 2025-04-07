@@ -1,5 +1,8 @@
 import 'package:box_app/core/font_style.dart';
+import 'package:box_app/view/ui/home/home.dart';
+import 'package:box_app/view/ui/nav_bar_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../controller/auth/login_controller.dart';
 import '../../../core/app_color.dart';
@@ -8,7 +11,9 @@ import '../../widget/auth/signup_button.dart';
 import '../../widget/custom_button.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  final bool isOpen;
+
+  LoginScreen({super.key, this.isOpen = false});
 
   final _controller = LoginController.to;
 
@@ -30,18 +35,31 @@ class LoginScreen extends StatelessWidget {
                     // color: AppColor.primaryColor,
                   ),
                   const SizedBox(height: 30),
-                  Text("Welcome Back!",
+                  Text("Welcome Back!".tr,
                       style: bold24.copyWith(color: AppColor.primaryColor)),
                   const SizedBox(height: 20),
                   CustomTextFiled(
-                      label: 'Email',
+                      label: 'Email'.tr,
                       icon: Icons.email_outlined,
                       controller: _controller.email),
                   const SizedBox(height: 15),
-                  CustomTextFiled(
-                      label: 'Password',
-                      icon: Icons.lock_outline,
-                      controller: _controller.password),
+                  GetBuilder<LoginController>(builder: (logic) {
+                    return CustomTextFiled(
+                        obscureText: _controller.isObsecure,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              _controller.togglePassword();
+                            },
+                            icon: Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: _controller.isObsecure
+                                  ? Colors.black45
+                                  : AppColor.primaryColor,
+                            )),
+                        label: 'Password'.tr,
+                        icon: Icons.lock_outline,
+                        controller: _controller.password);
+                  }),
                   const SizedBox(height: 20),
                   SizedBox(
                       width: double.infinity,
@@ -67,16 +85,16 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 15),
                   const SignUpButton(),
                   const SizedBox(height: 15),
-                  // TextButton(
-                  //   onPressed: () {},
-                  //   child: const Text(
-                  //     "Login as a guest",
-                  //     style: TextStyle(
-                  //         color: AppColor.primaryColor2,
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.bold),
-                  //   ),
-                  // ),
+                  if (!isOpen)
+                    TextButton(
+                      onPressed: () {
+                        Get.offAll(() => const NavBarScreen());
+                      },
+                      child: Text(
+                        "Login as a guest".tr,
+                        style: bold16.copyWith(color: AppColor.primaryColor2),
+                      ),
+                    ),
                 ],
               ),
             ),

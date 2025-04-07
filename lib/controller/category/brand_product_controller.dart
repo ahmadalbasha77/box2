@@ -28,7 +28,7 @@ class BrandProductController extends GetxController {
       var response = await RestApi.getBrand(pageSize: 15, pageIndex: 1);
 
       brand = [
-        BrandDate(id: -1, name: 'الكل', imageUrl: ''),
+        BrandDate(id: -1, name: 'all'.tr, imageUrl: ''),
         ...response.data.data
       ];
     } finally {

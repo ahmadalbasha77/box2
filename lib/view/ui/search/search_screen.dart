@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/font_style.dart';
 
@@ -24,7 +25,7 @@ class SearchScreen extends StatelessWidget {
                   Icons.search,
                   color: Colors.grey,
                 ),
-                hintText: 'ابحث عن منتج',
+                hintText: 'ابحث عن منتج'.tr,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(20),
@@ -38,7 +39,7 @@ class SearchScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Expanded(child: Center(child: Text('قم بالبحث عن منتج'))),
+             Expanded(child: Center(child: Text('قم بالبحث عن منتج'.tr))),
           ],
         ),
       ),

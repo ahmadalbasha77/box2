@@ -66,7 +66,7 @@ class CartController extends GetxController {
 
   void addOrder() async {
     if (cartItems.isEmpty) {
-      Utils.showFlutterToast('Cart is empty');
+      Utils.showFlutterToast('Cart is empty'.tr);
     } else {
       Utils.showLoadingDialog();
       List<Map<String, dynamic>> cartItemsData = cartItems.map((item) {

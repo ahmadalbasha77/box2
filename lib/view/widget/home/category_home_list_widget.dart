@@ -15,7 +15,7 @@ class CategoryHomeListWidget extends StatelessWidget {
         builder: (logic) => _controller.isLoading == true
             ? const Center(child: CircularProgressIndicator())
             : _controller.categories.isEmpty
-            ? const Center(child: Text('لا يوجد بيانات'))
+            ?  Center(child: Text('لا يوجد بيانات'.tr))
             : SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.15,
             child: ListView.builder(

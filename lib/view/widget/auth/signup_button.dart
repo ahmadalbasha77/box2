@@ -13,16 +13,16 @@ class SignUpButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          "Don't have an account ?",
-          style: TextStyle(color: AppColor.primaryColor),
+         Text(
+          "Don't have an account ?".tr,
+          style: const TextStyle(color: AppColor.primaryColor),
         ),
         TextButton(
           onPressed: () {
             Get.to(() =>  SignUpScreen());
           },
           child: Text(
-            "Sign Up",
+            "Sign Up".tr,
             style: semiBold16,
           ),
         ),

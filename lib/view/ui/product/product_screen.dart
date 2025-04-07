@@ -22,8 +22,8 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'المنتجات',
+        title:  Text(
+          'المنتجات'.tr,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -44,13 +44,13 @@ class ProductScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20),
                   SearchTextFiled(
-                    hint: 'ابحث عن منتج',
+                    hint: 'ابحث عن منتج'.tr,
                     controller: logic.controllerSearch,
                     onChanged: (p0) => logic.searchOnChange(),
                   ),
                   const SizedBox(height: 20),
                   if(isCart)
-                  BrandProductWidget(),
+                  const BrandProductWidget(),
                   if(isCart)
                   const SizedBox(height: 20),
                   Expanded(
@@ -139,7 +139,7 @@ class ProductWidget extends StatelessWidget {
                             vertical: 5,
                             style: regular12.copyWith(color: Colors.white),
                             color: Colors.grey,
-                            title: 'نفذت الكمية',
+                            title: 'نفذت الكمية'.tr,
                             onTap: () {},
                           )
                         : AnimatedAddRemoveButton(

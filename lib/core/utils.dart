@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'app_color.dart';
+import 'my_shared_preferences.dart';
 
 class Utils {
   static bool isNotEmpty(String? s) => s != null && s.isNotEmpty;
@@ -100,33 +101,32 @@ class Utils {
     launchUrlString("tel://$url");
   }
 
-  // static void changeLanguage() {
-  //   Get.defaultDialog(
-  //     title: 'Language'.tr,
-  //     content: Column(
-  //       children: [
-  //         ListTile(
-  //           onTap: () {
-  //             mySharedPreferences.language = 'en';
-  //             Get.updateLocale(Locale(mySharedPreferences.language));
-  //             Get.back();
-  //           },
-  //           title: const Text('English'),
-  //         ),
-  //         ListTile(
-  //           onTap: () {
-  //             mySharedPreferences.language = 'ar';
-  //             Get.updateLocale(Locale(mySharedPreferences.language));
-  //             Get.back();
-  //           },
-  //           title: const Text('العربية'),
-  //         ),
-  //       ],
-  //     ),
-  //     barrierDismissible: true,
-  //   );
-  // }
-
+  static void changeLanguage() {
+    Get.defaultDialog(
+      title: 'language'.tr,
+      content: Column(
+        children: [
+          ListTile(
+            onTap: () {
+              mySharedPreferences.language = 'en';
+              Get.updateLocale(Locale(mySharedPreferences.language));
+              Get.back();
+            },
+            title: const Text('English'),
+          ),
+          ListTile(
+            onTap: () {
+              mySharedPreferences.language = 'ar';
+              Get.updateLocale(Locale(mySharedPreferences.language));
+              Get.back();
+            },
+            title: const Text('العربية'),
+          ),
+        ],
+      ),
+      barrierDismissible: true,
+    );
+  }
   static Future<String> fromDateSelected(TextEditingController from,
       TextEditingController to, BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(

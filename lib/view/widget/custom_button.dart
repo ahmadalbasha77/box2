@@ -1,5 +1,6 @@
 import 'package:box_app/core/font_style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../core/app_color.dart';
 
@@ -33,7 +34,7 @@ class CustomButton extends StatelessWidget {
       ),
       onPressed: onTap,
       child: Text(
-        title,
+        title.tr,
         style: style ?? regular16.copyWith(color: Colors.white
         ),
       ),

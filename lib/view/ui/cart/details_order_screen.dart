@@ -1,6 +1,7 @@
 import 'package:box_app/core/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:box_app/core/utils.dart';
+import 'package:get/get.dart';
 
 import '../../../model/order/order_model.dart';
 
@@ -13,7 +14,7 @@ class OrderDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('تفاصيل الطلب'),
+        title:  Text('تفاصيل الطلب'.tr),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -28,7 +29,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
             // قائمة المنتجات
             Text(
-              'المنتجات (${order.cartItems.length})',
+              '${'المنتجات'.tr} (${order.cartItems.length})',
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -53,8 +54,8 @@ class OrderDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'رقم الطلب',
+                 Text(
+                  'رقم الطلب'.tr,
                   style: TextStyle(color: Colors.grey),
                 ),
                 Text(
@@ -67,8 +68,8 @@ class OrderDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'تاريخ الطلب',
+                 Text(
+                  'تاريخ الطلب'.tr,
                   style: TextStyle(color: Colors.grey),
                 ),
                 Text(
@@ -81,9 +82,9 @@ class OrderDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'المجموع',
-                  style: TextStyle(color: Colors.grey),
+                 Text(
+                  'المجموع'.tr,
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
                   order.totalPrice.toStringAsFixed(2),

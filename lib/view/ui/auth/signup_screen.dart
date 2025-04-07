@@ -32,9 +32,9 @@ class SignUpScreen extends StatelessWidget {
                     width: MediaQuery.sizeOf(context).width * 0.44,
                   ),
                   const SizedBox(height: 30),
-                  const Text(
-                    "Create Account",
-                    style: TextStyle(
+                  Text(
+                    "Create Account".tr,
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: AppColor.primaryColor,
@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "Please enter your info to create an account",
+                    "Please enter your info to create an account".tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16, color: Colors.grey[500]),
                   ),
@@ -54,8 +54,13 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   CustomTextFiled(
                       label: 'Username',
-                      icon: Icons.person,
+                      icon: Icons.person_pin,
                       controller: _controller.userName),
+                  const SizedBox(height: 10),
+                  CustomTextFiled(
+                      label: 'Full Name',
+                      icon: Icons.person,
+                      controller: _controller.name),
                   const SizedBox(height: 10),
                   CustomTextFiled(
                       label: 'Store Name',
@@ -69,12 +74,24 @@ class SignUpScreen extends StatelessWidget {
                       icon: Icons.phone,
                       controller: _controller.phoneNumber),
                   const SizedBox(height: 10),
-                  CustomTextFiled(
-                      validator: (text) => Validation.isPassword(text),
-                      obscureText: true,
-                      label: 'Password',
-                      icon: Icons.lock,
-                      controller: _controller.password),
+                  GetBuilder<SignUpController>(builder: (logic) {
+                    return CustomTextFiled(
+                        validator: (text) => Validation.isPassword(text),
+                        obscureText: _controller.isObsecure,
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              _controller.togglePassword();
+                            },
+                            icon: Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: _controller.isObsecure
+                                  ? Colors.black45
+                                  : AppColor.primaryColor,
+                            )),
+                        label: 'Password',
+                        icon: Icons.lock,
+                        controller: _controller.password);
+                  }),
                   const SizedBox(height: 10),
                   AreaWidget(),
                   const SizedBox(height: 25),
@@ -93,9 +110,10 @@ class SignUpScreen extends StatelessWidget {
                       onPressed: () {
                         _controller.signUp();
                       },
-                      child: const Text(
-                        "Sign Up",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      child: Text(
+                        "Sign Up".tr,
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ),
                   ),
@@ -103,18 +121,18 @@ class SignUpScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Already have an account?",
-                        style: TextStyle(
+                      Text(
+                        "Already have an account?".tr,
+                        style: const TextStyle(
                             fontSize: 16, color: AppColor.primaryColor),
                       ),
                       TextButton(
                         onPressed: () {
                           Get.back();
                         },
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
+                        child: Text(
+                          "Login".tr,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: AppColor.primaryColor,

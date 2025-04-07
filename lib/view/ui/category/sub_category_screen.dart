@@ -18,8 +18,8 @@ class SubCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'الاصناف الفرعية',
+        title:  Text(
+          'الاصناف الفرعية'.tr,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class SubCategoryScreen extends StatelessWidget {
                     Icons.search,
                     color: AppColor.primaryColor,
                   ),
-                  hintText: 'ابحث عن صنف',
+                  hintText: 'ابحث عن صنف'.tr,
                   hintStyle: regular14.copyWith(color: Colors.grey),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,

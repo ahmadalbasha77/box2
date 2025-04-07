@@ -1,6 +1,7 @@
 import 'package:box_app/core/app_color.dart';
 import 'package:box_app/core/font_style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -9,8 +10,8 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'الاشعارات',
+        title:  Text(
+          'الاشعارات'.tr,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

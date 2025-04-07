@@ -20,9 +20,9 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'الاصناف',
-          style: TextStyle(
+        title:  Text(
+          'الاصناف'.tr,
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
@@ -60,7 +60,7 @@ class CategoryScreen extends StatelessWidget {
                     Icons.search,
                     color: AppColor.primaryColor,
                   ),
-                  hintText: 'ابحث عن صنف',
+                  hintText: 'ابحث عن صنف'.tr,
                   hintStyle: regular14.copyWith(color: Colors.grey),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,

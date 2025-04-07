@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/order/cart_controller.dart';
+import '../../../core/my_shared_preferences.dart';
 import '../../../core/utils.dart';
+import '../auth/login_screen.dart';
 
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
@@ -18,18 +20,26 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('السلة'),
+        title:  Text('السلة'.tr),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
           child: GetBuilder<CartController>(builder: (logic) {
             return CustomButton(
-              title: 'تنفيذ الطلب ${controller.total} JD'
+              title: '${'تنفيذ الطلب'.tr} ${controller.total} JD'
                   '',
               onTap: () async {
-                if (await Utils.showAreYouSureDialog(title: 'تنفيذ الطلب'.tr)) {
-                  controller.addOrder();
+                if (mySharedPreferences.isLogin) {
+                  if (await Utils.showAreYouSureDialog(
+                      title: 'تنفيذ الطلب'.tr)) {
+                    controller.addOrder();
+                  }
+                } else {
+                  Utils.showSnackbar('تنبيه !', 'يرجى تسجيل الدخول');
+                  Get.to(() => LoginScreen(
+                        isOpen: true,
+                      ));
                 }
               },
             );
@@ -47,7 +57,7 @@ class CartScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Text('السلة (${controller.cartItems.length} عناصر)',
+              Text('${'السلة'.tr} (${controller.cartItems.length} ${'عناصر'.tr})',
                   style: bold16.copyWith(color: AppColor.primaryColor)),
               Expanded(
                 child: controller.cartItems.isNotEmpty
@@ -67,7 +77,7 @@ class CartScreen extends StatelessWidget {
                             item: controller.cartItems[index]),
                       )
                     : Center(
-                        child: Text('لا يوجد عناصر في السلة',
+                        child: Text('لا يوجد عناصر في السلة'.tr,
                             style:
                                 bold16.copyWith(color: AppColor.primaryColor)),
                       ),

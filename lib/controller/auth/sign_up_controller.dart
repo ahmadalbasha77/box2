@@ -16,8 +16,10 @@ class SignUpController extends GetxController {
 
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+
   final TextEditingController name = TextEditingController();
   final TextEditingController userName = TextEditingController();
+
   final TextEditingController shopName = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
   var selectedAreaId = Rxn<String>();
@@ -26,6 +28,12 @@ class SignUpController extends GetxController {
   void setSelectedArea(String id, String name) {
     selectedAreaId.value = id;
     selectedAreaName.value = name;
+  }
+  bool isObsecure = true;
+
+  void togglePassword() {
+    isObsecure = !isObsecure;
+    update();
   }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -40,7 +48,7 @@ class SignUpController extends GetxController {
             "userName": userName.text,
             "shopName": shopName.text,
             "email": email.text,
-            "phoneNumber": shopName.text,
+            "phoneNumber": phoneNumber.text,
             "password": password.text,
             "areaId": selectedAreaId.value,
             "role": 0,
