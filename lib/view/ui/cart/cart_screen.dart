@@ -27,7 +27,7 @@ class CartScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
           child: GetBuilder<CartController>(builder: (logic) {
             return CustomButton(
-              title: '${'تنفيذ الطلب'.tr} ${controller.total} JD'
+              title: '${'تنفيذ الطلب'.tr} ${controller.total.toStringAsFixed(2)} JD'
                   '',
               onTap: () async {
                 if (mySharedPreferences.isLogin) {

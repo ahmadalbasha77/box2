@@ -29,7 +29,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
                 child: child,
               );
             },
-            child: _controller.tabs.elementAt(_controller.selectedIndex.value),
+            child: _controller.tabs.elementAt(_controller.selectedIndex),
           );
         }),
         bottomNavigationBar: CurvedNavBarWidget(),
@@ -38,15 +38,13 @@ class _NavBarScreenState extends State<NavBarScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    if (_controller.selectedIndex.value != 0) {
-      _controller.selectedIndex.value = 0;
+    if (_controller.selectedIndex != 0) {
+      _controller.selectedIndex = 0;
       _controller.update();
       return false;
     }
     return true;
   }
-
-
 }
 
 class CurvedNavBarWidget extends StatelessWidget {
@@ -57,20 +55,20 @@ class CurvedNavBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      index: _controller.selectedIndex.value,
+      index: _controller.selectedIndex,
       height: 60.0,
       color: AppColor.primaryColor,
       buttonBackgroundColor: AppColor.primaryColor.withOpacity(0.5),
       backgroundColor: Colors.transparent,
       animationDuration: const Duration(milliseconds: 300),
       onTap: (index) {
-        _controller.selectedIndex.value = index;
+
+        _controller.selectedIndex = index;
         _controller.update();
       },
       items: const [
         Icon(Icons.home, size: 30, color: Colors.white),
         Icon(Icons.category, size: 30, color: Colors.white),
-
         Icon(Icons.shopping_cart, size: 30, color: Colors.white),
         Icon(Icons.search, size: 30, color: Colors.white),
         Icon(Icons.notifications, size: 30, color: Colors.white),

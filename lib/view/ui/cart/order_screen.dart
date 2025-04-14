@@ -75,7 +75,7 @@ class OrderCard extends StatelessWidget {
               children: [
                  Text(
                   'الإجمالي'.tr,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '${order.totalPrice.toStringAsFixed(2)} JD',

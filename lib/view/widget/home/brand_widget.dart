@@ -14,7 +14,7 @@ class BrandWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const ProductScreen(), arguments: {'brandId': data.id});
+        Get.to(() => const ProductScreen(isCart: false,), arguments: {'brandId': data.id});
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),

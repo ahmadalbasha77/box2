@@ -23,8 +23,8 @@ class ProductScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:  Text(
-          'المنتجات'.tr,
-          style: TextStyle(
+          "المنتجات".tr,
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),

@@ -56,7 +56,7 @@ class OrderDetailsScreen extends StatelessWidget {
               children: [
                  Text(
                   'رقم الطلب'.tr,
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
                   order.id.toString(),
@@ -70,7 +70,7 @@ class OrderDetailsScreen extends StatelessWidget {
               children: [
                  Text(
                   'تاريخ الطلب'.tr,
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
                   Utils.formatDate(order.createdDate),

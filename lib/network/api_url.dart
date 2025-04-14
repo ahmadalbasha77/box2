@@ -16,6 +16,8 @@ class ApiUrl{
   static const String getOrder = "api/Cart/GetAllCarts";
   static const String deleteAccount = "User/DeleteUser";
 
+  static const String getNotification = "api/Notification";
+
 
 
 

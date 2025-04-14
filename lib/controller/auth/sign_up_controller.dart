@@ -51,7 +51,7 @@ class SignUpController extends GetxController {
             "phoneNumber": phoneNumber.text,
             "password": password.text,
             "areaId": selectedAreaId.value,
-            "role": 0,
+            "role": 1,
             "isActive": true,
             "deviceToken": mySharedPreferences.deviceToken
           }),

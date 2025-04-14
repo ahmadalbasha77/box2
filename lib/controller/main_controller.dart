@@ -9,9 +9,9 @@ import '../view/ui/product/product_screen.dart';
 class MainController extends GetxController {
   static MainController get to => Get.isRegistered<MainController>()
       ? Get.find<MainController>()
-      : Get.put(MainController());
+      : Get.put(MainController(),permanent: true);
 
-  final selectedIndex = 0.obs;
+  int selectedIndex = 0;
 
   final tabs = [
     const HomeScreen(),
@@ -22,6 +22,6 @@ class MainController extends GetxController {
     const ProductScreen(
       isCart: false,
     ),
-    const NotificationScreen(),
+     NotificationScreen(),
   ];
 }

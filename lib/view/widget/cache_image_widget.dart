@@ -1,5 +1,7 @@
+import 'package:box_app/core/font_style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CacheImageWidget extends StatelessWidget {
   final String image;
@@ -17,7 +19,24 @@ class CacheImageWidget extends StatelessWidget {
       width: width,
       fit: fit,
       imageUrl: image,
-      errorWidget: (context, url, error) => const Icon(Icons.error_outline),
+      errorWidget: (context, url, error) =>  Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.shopping_cart_outlined,
+            color: Colors.black26,
+            size: 50,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            'المنتج بدون صورة'.tr,
+            style: regular10,
+          )
+        ],
+      ),
     );
   }
 }

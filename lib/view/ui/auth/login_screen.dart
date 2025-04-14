@@ -1,5 +1,4 @@
 import 'package:box_app/core/font_style.dart';
-import 'package:box_app/view/ui/home/home.dart';
 import 'package:box_app/view/ui/nav_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

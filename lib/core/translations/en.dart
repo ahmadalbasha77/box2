@@ -68,6 +68,7 @@ const Map<String, String> en = {
   'Cancel':'Cancel',
   'Confirm':'Confirm',
   'Full Name':'Full Name',
+  'المنتج بدون صورة':'Product without image',
 
 
 

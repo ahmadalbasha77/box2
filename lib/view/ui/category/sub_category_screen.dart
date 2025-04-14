@@ -20,7 +20,7 @@ class SubCategoryScreen extends StatelessWidget {
       appBar: AppBar(
         title:  Text(
           'الاصناف الفرعية'.tr,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),

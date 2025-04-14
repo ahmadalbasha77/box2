@@ -82,7 +82,7 @@ class CartController extends GetxController {
         "name": "string",
         "userId": mySharedPreferences.userId,
         "cartItems": cartItemsData,
-        "totalPrice": totalPrice,
+        "totalPrice": totalPrice.toStringAsFixed(2),
         "cartStatus": 0
       }));
 

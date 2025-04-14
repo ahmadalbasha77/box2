@@ -24,6 +24,7 @@ class LoginController extends GetxController {
     isObsecure = !isObsecure;
     update();
   }
+
   void login() async {
     if (formKey.currentState!.validate()) {
       try {
@@ -33,7 +34,7 @@ class LoginController extends GetxController {
             {
               "emailOrUsername": email.text,
               "password": password.text,
-              "deviceToken": "string"
+              "deviceToken": mySharedPreferences.deviceToken
             },
           ),
         );
@@ -42,17 +43,14 @@ class LoginController extends GetxController {
           mySharedPreferences.isLogin = true;
           mySharedPreferences.token = result.data.token;
           mySharedPreferences.userName = result.data.username;
-          print('**************************************');
-          print(result.data.username);
-          print(mySharedPreferences.userName);
-          print('**************************************');
 
           mySharedPreferences.userId = result.data.userId;
           mySharedPreferences.email = result.data.email;
           // mySharedPreferences.saveUserData(result.data);
           Get.offAll(() => const NavBarScreen());
         } else {
-          Utils.showSnackbar('Please try again', 'email or password is incorrect');
+          Utils.showSnackbar(
+              'Please try again', 'email or password is incorrect');
         }
       } catch (e) {
         Utils.hideLoadingDialog();

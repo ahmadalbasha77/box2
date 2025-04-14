@@ -14,6 +14,7 @@ import 'package:box_app/network/api_url.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/home/brand_model.dart';
+import '../model/home/notification_model.dart';
 
 class RestApi {
   static String token = mySharedPreferences.token;
@@ -270,6 +271,28 @@ class RestApi {
       return SubCategoryModel.fromJson({});
     } else {
       return SubCategoryModel.fromJson({});
+    }
+  }
+
+  static Future<NotificationModel> getNotification() async {
+    String url = '${ApiUrl.baseUrl}${ApiUrl.getNotification}';
+    Uri uri = Uri.parse(url);
+    var headers = {
+      'accept': 'text/plain',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(uri, headers: headers);
+    log('url : $url');
+    log('getSubCategory : ${response.statusCode}');
+    log('statusCode : ${response.statusCode}');
+    log('getNotification : ${response.body}');
+    if (response.statusCode == 200) {
+      return NotificationModel.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 400) {
+      return NotificationModel.fromJson({});
+    } else {
+      return NotificationModel.fromJson({});
     }
   }
 
