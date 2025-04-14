@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Implement logout
                 },
               ),
-            ] else
+            ] else ...[
               ListTile(
                 leading: const Icon(Icons.language),
                 title: Text('language'.tr),
@@ -160,11 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text('تسجيل دخول'.tr),
                 onTap: () async {
                   return Get.to(() => LoginScreen(
-                        isOpen: true,
-                      ));
+                    isOpen: true,
+                  ));
                   // Implement logout
                 },
               ),
+            ]
+
 
           ],
         ),

@@ -6,7 +6,7 @@ import '../../model/home/notification_model.dart';
 class NotificationController extends GetxController {
   static NotificationController get to => Get.isRegistered<NotificationController>()
       ? Get.find<NotificationController>()
-      : Get.put(NotificationController());
+      : Get.put(NotificationController() , permanent: true);
 
   List<ItemNotifications> notifications = [];
 
