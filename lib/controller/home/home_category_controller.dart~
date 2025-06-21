@@ -1,0 +1,31 @@
+import 'package:box_app/model/home/category_model.dart';
+import 'package:box_app/network/rest_api.dart';
+import 'package:get/get.dart';
+
+class HomeCategoryController extends GetxController {
+  static HomeCategoryController get to => Get.isRegistered<HomeCategoryController>()
+      ? Get.find<HomeCategoryController>()
+      : Get.put(HomeCategoryController());
+
+  List<CategoryData> categories = [];
+
+  bool isLoading = false;
+
+  @override
+  onInit() {
+    super.onInit();
+    getCategory();
+  }
+
+  Future<void> getCategory() async {
+    try {
+      isLoading = true;
+      update();
+      var response = await RestApi.getCategory(pageSize: 10, pageIndex: 0);
+      ads = response.data.items;
+    } finally {
+      isLoading = false;
+      update();
+    }
+  }
+}

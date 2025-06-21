@@ -27,7 +27,7 @@ class SignUpScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/undraw_mobile-login_4ntr-removebg-preview.png',
+                    'assets/images/signup.png',
                     height: MediaQuery.sizeOf(context).height * 0.2,
                     width: MediaQuery.sizeOf(context).width * 0.44,
                   ),

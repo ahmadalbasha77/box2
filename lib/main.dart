@@ -23,21 +23,21 @@ void main() async {
     } else {}
   });
 
-  try {
-    await Firebase.initializeApp();
-    await FirebaseMessaging.instance.requestPermission();
-
-    String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-    if (apnsToken == null) {
-    } else {
-      String? fcmToken = await FirebaseMessaging.instance.getToken();
-      mySharedPreferences.deviceToken = fcmToken ?? "";
-    }
-  } catch (e) {
-    log('$e');
-  }
-  MessagingConfig.init();
-  FirebaseMessagingConfig.onMessage();
+  // try {
+  //   await Firebase.initializeApp();
+  //   await FirebaseMessaging.instance.requestPermission();
+  //
+  //   String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+  //   if (apnsToken == null) {
+  //   } else {
+  //     String? fcmToken = await FirebaseMessaging.instance.getToken();
+  //     mySharedPreferences.deviceToken = fcmToken ?? "";
+  //   }
+  // } catch (e) {
+  //   log('$e');
+  // }
+  // MessagingConfig.init();
+  // FirebaseMessagingConfig.onMessage();
 
   runApp(
     DevicePreview(

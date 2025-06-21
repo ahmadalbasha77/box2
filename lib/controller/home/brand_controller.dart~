@@ -1,0 +1,84 @@
+import 'dart:async';
+
+import 'package:box_app/model/home/brand_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../../network/rest_api.dart';
+
+class BrandController extends GetxController {
+  static BrandController get to => Get.isRegistered<BrandController>()
+      ? Get.find<BrandController>()
+      : Get.put(BrandController());
+
+  final TextEditingController controllerSearch = TextEditingController();
+  final Rxn<Timer> searchOnStoppedTyping = Rxn<Timer>();
+
+  PagingController<int, BrandDate> pagingController = PagingController(firstPageKey: 0);
+  int currentPageSize = 0;
+
+  @override
+  void onInit() {
+    super.onInit();
+    pagingController.addPageRequestListener((pageKey) {
+      getBrand(pageKey: pageKey);
+    });
+
+    controllerSearch.addListener(searchOnChange);
+  }
+
+  void getBrand({required int pageKey}) async {
+    try {
+      currentPageSize++;
+      final result = await RestApi.getBrand(
+        pageSize: 5,
+        pageIndex: currentPageSize,
+        search: controllerSearch.text,
+      );
+
+      if (result.data.data.isNotEmpty) {
+        final List<BrandDate> flatList = result.data.data;
+        final isLastPage = flatList.length <= 5;
+        if (isLastPage) {
+          pagingController.appendLastPage(flatList);
+        } else {
+          pagingController.appendPage(flatList, pageKey + flatList.length);
+        }
+      } else {
+        pagingController.appendLastPage([]);
+      }
+    } catch (error) {
+      pagingController.error = error;
+    }
+  }
+
+  void searchOnChange() {
+    if (searchOnStoppedTyping.value != null) {
+      searchOnStoppedTyping.value!.cancel();
+    }
+    searchOnStoppedTyping.value = Timer(const Duration(milliseconds: 300), () {
+      refreshScreen();
+    });
+  }
+
+  void refreshScreen() {
+    currentPageSize = 0;
+    pagingController.refresh();
+  }
+
+  void refreshPagingController() {
+    pagingController = PagingController(firstPageKey: 0);
+    currentPageSize = 0;
+    pagingController.addPageRequestListener((pageKey) {
+      getBrand(pageKey: pageKey);
+    });
+  }
+
+  @override
+  void dispose() {
+    controllerSearch.dispose();
+    searchOnStoppedTyping.value?.cancel();
+    super.dispose();
+  }
+}

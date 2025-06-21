@@ -1,0 +1,4 @@
+storePassword=ahmad123
+keyPassword=ahmad123
+keyAlias=key
+storeFile=../app/key.jks

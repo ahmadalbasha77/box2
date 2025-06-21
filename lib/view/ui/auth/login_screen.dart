@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/undraw_login_wqkt__1_-removebg-preview.png',
+                    'assets/images/login.png',
                     height: MediaQuery.sizeOf(context).height * 0.18,
                     // color: AppColor.primaryColor,
                   ),

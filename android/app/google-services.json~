@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:170893499388:android:18adb79995695206f4f079",
+        "mobilesdk_app_id": "1:170893499388:android:c1f4e824e711894cf4f079",
         "android_client_info": {
-          "package_name": "com.box.jo_app"
+          "package_name": "com.shop.box_app"
         }
       },
       "oauth_client": [],

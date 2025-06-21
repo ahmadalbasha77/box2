@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:pinput/pinput.dart';
+
+import 'app_color.dart';
+
+ThemeData themeApp = ThemeData(
+  fontFamily: 'tejwal',
+  scaffoldBackgroundColor: Colors.grey[200],
+  appBarTheme: const AppBarTheme(
+    titleTextStyle: TextStyle(color: Colors.white, fontSize: 20,fontFamily: 'tejwal'),
+    centerTitle: true,
+    iconTheme: IconThemeData(color: Colors.white),
+    backgroundColor: AppColor.primaryColor,
+    elevation: 4,
+  ),
+  colorScheme: const ColorScheme.light(
+    primary: AppColor.primaryColor,
+    onPrimary: Colors.white,
+  ),
+  dialogBackgroundColor: Colors.white,
+  primaryColor: AppColor.primaryColor,
+  progressIndicatorTheme: const ProgressIndicatorThemeData(
+    color: AppColor.primaryColor,
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: AppColor.primaryColor,
+    selectionColor: AppColor.primaryColor.withOpacity(0.2),
+    selectionHandleColor: AppColor.primaryColor,
+  ),
+  datePickerTheme: const DatePickerThemeData(
+    backgroundColor: Colors.white,
+    headerBackgroundColor: Colors.white,
+    dividerColor: Colors.white,
+    headerHeadlineStyle: TextStyle(color: Colors.white, fontSize: 28),
+    headerForegroundColor: AppColor.primaryColor,
+    headerHelpStyle: TextStyle(fontSize: 12),
+    dayStyle: TextStyle(
+      fontSize: 13,
+    ),
+    weekdayStyle: TextStyle(
+      fontSize: 13,
+    ),
+    rangeSelectionBackgroundColor: Colors.redAccent,
+  ),
+);
+final defaultPinTheme = PinTheme(
+  width: 56,
+  height: 60,
+  decoration: BoxDecoration(
+    color: Colors.grey[100],
+    borderRadius: BorderRadius.circular(8),
+    border: Border.all(color: Colors.transparent),
+  ),
+);
