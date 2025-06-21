@@ -22,7 +22,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           "المنتجات".tr,
           style: const TextStyle(
             color: Colors.white,
@@ -49,10 +49,8 @@ class ProductScreen extends StatelessWidget {
                     onChanged: (p0) => logic.searchOnChange(),
                   ),
                   const SizedBox(height: 20),
-                  if(isCart)
-                  const BrandProductWidget(),
-                  if(isCart)
-                  const SizedBox(height: 20),
+                  if (isCart) const BrandProductWidget(),
+                  if (isCart) const SizedBox(height: 20),
                   Expanded(
                     child: PagedGridView<int, ProductData>(
                       gridDelegate:
@@ -127,6 +125,22 @@ class ProductWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
+                Align(
+                  alignment: Alignment.centerRight, // أو centerLeft حسب الـ RTL
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppColor.primaryColor,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      'صندوق'.tr,
+                      style: regular10.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
                 Text(
                   '${data.price}',
                   textAlign: TextAlign.center,
