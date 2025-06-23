@@ -1,6 +1,6 @@
 class ApiUrl{
 
-  static const String baseUrl = "https://api.boxjo.app/";
+  static const String baseUrl = "https://orgapi.boxjo.app/";
 
   static const String login = "Auth/login";
   static const String signup = "User/CreateUser";
