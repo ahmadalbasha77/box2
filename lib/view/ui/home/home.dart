@@ -48,32 +48,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(width: 16),
                   mySharedPreferences.isLogin
                       ? Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                mySharedPreferences.userName,
-                                style: bold18.copyWith(color: Colors.white),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 0),
-                              Text(
-                                mySharedPreferences.email,
-                                style: const TextStyle(color: Colors.white70),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        )
-                      : Text(
-                          'ضيف'.tr,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          mySharedPreferences.userName,
                           style: bold18.copyWith(color: Colors.white),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        const SizedBox(height: 0),
+                        Text(
+                          mySharedPreferences.email,
+                          style: const TextStyle(color: Colors.white70),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  )
+                      : Text(
+                    'ضيف'.tr,
+                    style: bold18.copyWith(color: Colors.white),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: AppColor.primaryColor,
         title: Text('الصفحة الرئيسية'.tr,
-            style: bold18.copyWith(color: Colors.white)),
+            style: bold18),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: Padding(
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: InputDecoration(
                 hintText: 'ابحث عن منتجات...'.tr,
                 prefixIcon:
-                    const Icon(Icons.search, color: AppColor.primaryColor),
+                const Icon(Icons.search, color: AppColor.primaryColor),
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -197,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderSide: BorderSide.none,
                 ),
                 contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
               ),
             ),
           ),
@@ -205,27 +205,27 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
           child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AdsWidget(),
+                    const SizedBox(height: 20),
+                    const SectionWidget(title: 'العلامات الغذائية'),
+                    BrandListWidget(),
+                    const SectionWidget(title: 'الأصناف', actionText: 'عرض الكل'),
+                    CategoryHomeListWidget(),
+                    const SectionWidget(title: 'المنتجات الأكثر مبيعاً'),
+                  ],
                 ),
-                AdsWidget(),
-                const SizedBox(height: 20),
-                const SectionWidget(title: 'العلامات الغذائية'),
-                BrandListWidget(),
-                const SectionWidget(title: 'الأصناف', actionText: 'عرض الكل'),
-                CategoryHomeListWidget(),
-                const SectionWidget(title: 'المنتجات الأكثر مبيعاً'),
-              ],
-            ),
-          ),
-          BestSellerProductWidget()
-        ],
-      )),
+              ),
+              BestSellerProductWidget()
+            ],
+          )),
     );
   }
 }
@@ -238,37 +238,24 @@ class BestSellerProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BestSellerProductController>(
-      builder: (logic) => _controller.isLoading == true
+      builder: (logic) => logic.isLoading
           ? const SliverToBoxAdapter(
-              child: Center(child: CircularProgressIndicator()))
-          : _controller.product.isEmpty
-              ? SliverToBoxAdapter(
-                  child: Center(child: Text('لا يوجد بيانات'.tr)))
-              : SliverPadding(
-                  padding: const EdgeInsets.all(20),
-                  sliver: GetBuilder<BestSellerProductController>(
-                    builder: (logic) => logic.isLoading
-                        ? const SliverToBoxAdapter(
-                            child: Center(child: CircularProgressIndicator()))
-                        : logic.product.isEmpty
-                            ? SliverToBoxAdapter(
-                                child: Center(child: Text('لا يوجد بيانات'.tr)))
-                            : SliverGrid(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.64,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                ),
-                                delegate: SliverChildBuilderDelegate(
-                                  (_, index) =>
-                                      ProductWidget(data: logic.product[index]),
-                                  childCount: logic.product.length,
-                                ),
-                              ),
-                  ),
-                ),
+          child: Center(child: CircularProgressIndicator()))
+          : logic.product.isEmpty
+          ? SliverToBoxAdapter(
+          child: Center(child: Text('لا يوجد بيانات'.tr)))
+          : SliverPadding(
+        padding: const EdgeInsets.all(20),
+        sliver: SliverList(
+          delegate: SliverChildBuilderDelegate(
+                (context, index) => Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: ProductWidget(data: logic.product[index]),
+            ),
+            childCount: logic.product.length,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -335,40 +322,40 @@ class AdsWidget extends StatelessWidget {
         builder: (logic) => _controller.isLoading == true
             ? _buildShimmer()
             : _controller.ads.isEmpty
-                ? Center(child: Text('لا يوجد بيانات'.tr))
-                : Column(
-                    children: [
-                      CarouselSlider(
-                        items: _controller.ads
-                            .map((image) => ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: CacheImageWidget(
-                                    image: image.imageUrl,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ))
-                            .toList(),
-                        options: CarouselOptions(
-                          onPageChanged: _controller.onPageChanged,
-                          aspectRatio: 16 / 7,
-                          viewportFraction: 0.8,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Center(
-                        child: AnimatedSmoothIndicator(
-                          activeIndex: _controller.current,
-                          count: _controller.ads.length,
-                          effect: const ExpandingDotsEffect(
-                            activeDotColor: AppColor.primaryColor,
-                            dotHeight: 8,
-                            dotWidth: 8,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ));
+            ? Center(child: Text('لا يوجد بيانات'.tr))
+            : Column(
+          children: [
+            CarouselSlider(
+              items: _controller.ads
+                  .map((image) => ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CacheImageWidget(
+                  image: image.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ))
+                  .toList(),
+              options: CarouselOptions(
+                onPageChanged: _controller.onPageChanged,
+                aspectRatio: 16 / 7,
+                viewportFraction: 0.8,
+                autoPlay: true,
+                enlargeCenterPage: true,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: AnimatedSmoothIndicator(
+                activeIndex: _controller.current,
+                count: _controller.ads.length,
+                effect: const ExpandingDotsEffect(
+                  activeDotColor: AppColor.primaryColor,
+                  dotHeight: 8,
+                  dotWidth: 8,
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }

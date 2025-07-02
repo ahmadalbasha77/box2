@@ -25,7 +25,7 @@ class ProductScreen extends StatelessWidget {
         title: Text(
           "المنتجات".tr,
           style: const TextStyle(
-            color: Colors.white,
+            // color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -52,20 +52,16 @@ class ProductScreen extends StatelessWidget {
                   if (isCart) const BrandProductWidget(),
                   if (isCart) const SizedBox(height: 20),
                   Expanded(
-                    child: PagedGridView<int, ProductData>(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.64,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      // scrollDirection: Axis.horizontal,
+                    child: PagedListView<int, ProductData>(
                       pagingController: logic.pagingController,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 0),
                       builderDelegate: PagedChildBuilderDelegate<ProductData>(
                         itemBuilder: (context, item, index) {
-                          return ProductWidget(data: item);
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ProductWidget(data: item),
+                          );
                         },
                       ),
                     ),
@@ -78,96 +74,6 @@ class ProductScreen extends StatelessWidget {
   }
 }
 
-class ProductWidget extends StatelessWidget {
-  final ProductData data;
-
-  const ProductWidget({super.key, required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: CacheImageWidget(
-                  image: data.imageUrl,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  data.name,
-                  textAlign: TextAlign.center,
-                  style: bold14.copyWith(color: Colors.black87),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Align(
-                  alignment: Alignment.centerRight, // أو centerLeft حسب الـ RTL
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColor.primaryColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      'صندوق'.tr,
-                      style: regular10.copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
-                Text(
-                  '${data.price}',
-                  textAlign: TextAlign.center,
-                  style: bold16.copyWith(color: AppColor.primaryColor),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                    child: data.isSoldOut
-                        ? CustomButton(
-                            vertical: 5,
-                            style: regular12.copyWith(color: Colors.white),
-                            color: Colors.grey,
-                            title: 'نفذت الكمية'.tr,
-                            onTap: () {},
-                          )
-                        : AnimatedAddRemoveButton(
-                            product: data,
-                          )),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class SearchTextFiled extends StatelessWidget {
   final String hint;
   final void Function(String) onChanged;
@@ -175,9 +81,9 @@ class SearchTextFiled extends StatelessWidget {
 
   const SearchTextFiled(
       {super.key,
-      required this.onChanged,
-      required this.controller,
-      required this.hint});
+        required this.onChanged,
+        required this.controller,
+        required this.hint});
 
   @override
   Widget build(BuildContext context) {
@@ -219,53 +125,238 @@ class SearchTextFiled extends StatelessWidget {
   }
 }
 
+class ProductWidget extends StatefulWidget {
+  final ProductData data;
+
+  const ProductWidget({super.key, required this.data});
+
+  @override
+  State<ProductWidget> createState() => _ProductWidgetState();
+}
+
+class _ProductWidgetState extends State<ProductWidget> {
+  late ProductUnit selectedUnit;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedUnit = widget.data.productUnits.isNotEmpty
+        ? widget.data.productUnits.firstWhere(
+          (e) => e.isDefault,
+      orElse: () => widget.data.productUnits.first,
+    )
+        : ProductUnit(
+        id: 0, unit: '', price: 0, size: 0, quantity: 0, isDefault: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          /// صورة المنتج
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => Dialog(
+                  backgroundColor: Colors.transparent,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: InteractiveViewer(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: CacheImageWidget(
+                          image: widget.data.imageUrl,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: MediaQuery.of(context).size.width * 0.8,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CacheImageWidget(
+                image: widget.data.imageUrl,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 12),
+
+          /// التفاصيل
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// الاسم
+                Text(
+                  widget.data.name,
+                  style: bold14.copyWith(color: Colors.black87),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                const SizedBox(height: 6),
+
+                /// قائمة اختيار الوحدة
+                if (widget.data.productUnits.isNotEmpty)
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: widget.data.productUnits.map((unit) {
+                      final isSelected = unit.id == selectedUnit.id;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedUnit = unit;
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? AppColor.primaryColor
+                                : Colors.grey[200],
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            unit.unit,
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: isSelected ? Colors.black : Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+
+                const SizedBox(height: 6),
+
+                /// السعر
+                Text(
+                  '${selectedUnit.price.toStringAsFixed(2)} ${'JD'.tr}',
+                  style: bold14.copyWith(color: AppColor.primaryColor),
+                ),
+
+                const SizedBox(height: 8),
+
+                /// زر إضافة أو نفذت الكمية
+                widget.data.isSoldOut
+                    ? CustomButton(
+                  vertical: 4,
+                  style: regular12.copyWith(color: Colors.white),
+                  color: Colors.grey,
+                  title: 'نفذت الكمية'.tr,
+                  onTap: () {},
+                )
+                    : AnimatedAddRemoveButton(
+                  product: widget.data,
+                  unit: selectedUnit,
+                  iconSize: 16,
+                  buttonSize: 28,
+                  fontSize: 12,
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class AnimatedAddRemoveButton extends StatelessWidget {
   final ProductData product;
+  final ProductUnit unit;
+  final double iconSize;
+  final double buttonSize;
+  final double fontSize;
 
-  const AnimatedAddRemoveButton({super.key, required this.product});
+  const AnimatedAddRemoveButton({
+    super.key,
+    required this.product,
+    required this.unit,
+    this.iconSize = 18,
+    this.buttonSize = 32,
+    this.fontSize = 14,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(
       builder: (cartController) {
-        int count = cartController.quantityOf(product);
+        int count = cartController.quantityOf(product, unit);
         bool expanded = count > 0;
 
         return AnimatedContainer(
+          height: 35,
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeInOut,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 6),
           decoration: BoxDecoration(
-            color: expanded ? AppColor.primaryColor : AppColor.primaryColor,
-            borderRadius: BorderRadius.circular(12),
+            color: AppColor.primaryColor,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              /// زر الإنقاص
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
                 transitionBuilder: (child, animation) =>
                     ScaleTransition(scale: animation, child: child),
                 child: expanded
                     ? IconButton(
-                        key: const ValueKey('remove'),
-                        icon: const Icon(Icons.remove, color: Colors.white),
-                        onPressed: () => cartController.decrement(product),
-                      )
+                  key: const ValueKey('remove'),
+                  icon: Icon(Icons.remove,
+                      color: Colors.white, size: iconSize),
+                  onPressed: () =>
+                      cartController.decrement(product, unit),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                )
                     : const SizedBox.shrink(),
               ),
+
+              /// زر العدد أو الإضافة
               GestureDetector(
                 onTap: () {
                   if (expanded) {
-                    // cartController.removeProduct(product);
+                    // cartController.removeProduct(product, unit);
                   } else {
-                    cartController.addProduct(product);
+                    cartController.addProduct(product, unit);
                   }
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  width: 40,
-                  height: 40,
+                  width: buttonSize,
+                  height: buttonSize,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
@@ -279,32 +370,39 @@ class AnimatedAddRemoveButton extends StatelessWidget {
                     ),
                     child: expanded
                         ? Text(
-                            '$count',
-                            key: ValueKey<int>(count),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          )
-                        : const Icon(
-                            Icons.add,
-                            key: ValueKey('add'),
-                            color: Colors.white,
-                            size: 24,
-                          ),
+                      '$count',
+                      key: ValueKey<int>(count),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: fontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                        : Icon(
+                      Icons.add,
+                      key: const ValueKey('add'),
+                      color: Colors.white,
+                      size: iconSize,
+                    ),
                   ),
                 ),
               ),
+
+              /// زر الزيادة
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
                 transitionBuilder: (child, animation) =>
                     ScaleTransition(scale: animation, child: child),
                 child: expanded
                     ? IconButton(
-                        key: const ValueKey('add_more'),
-                        icon: const Icon(Icons.add, color: Colors.white),
-                        onPressed: () => cartController.increment(product),
-                      )
+                  key: const ValueKey('add_more'),
+                  icon: Icon(Icons.add,
+                      color: Colors.white, size: iconSize),
+                  onPressed: () =>
+                      cartController.increment(product, unit),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                )
                     : const SizedBox.shrink(),
               ),
             ],

@@ -19,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
         title: Text(
           'الاشعارات'.tr,
           style: const TextStyle(
-            color: Colors.white,
+            // color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),

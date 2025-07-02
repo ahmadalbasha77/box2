@@ -20,14 +20,15 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text('السلة'.tr),
+        title: Text('السلة'.tr),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
           child: GetBuilder<CartController>(builder: (logic) {
             return CustomButton(
-              title: '${'تنفيذ الطلب'.tr} ${controller.total.toStringAsFixed(2)} JD'
+              title:
+              '${'تنفيذ الطلب'.tr} ${controller.total.toStringAsFixed(2)} ${'JD'.tr}'
                   '',
               onTap: () async {
                 if (mySharedPreferences.isLogin) {
@@ -38,8 +39,8 @@ class CartScreen extends StatelessWidget {
                 } else {
                   Utils.showSnackbar('تنبيه !', 'يرجى تسجيل الدخول');
                   Get.to(() => LoginScreen(
-                        isOpen: true,
-                      ));
+                    isOpen: true,
+                  ));
                 }
               },
             );
@@ -57,30 +58,36 @@ class CartScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Text('${'السلة'.tr} (${controller.cartItems.length} ${'عناصر'.tr})',
+              Text(
+                  '${'السلة'.tr} (${controller.cartItems.length} ${'عناصر'.tr})',
                   style: bold16.copyWith(color: AppColor.primaryColor)),
               Expanded(
                 child: controller.cartItems.isNotEmpty
                     ? ListView.builder(
-                        itemCount: controller.cartItems.length,
-                        itemBuilder: (context, index) => CartWidget(
-                            price: controller
-                                .totalForProduct(controller.cartItems[index]),
-                            onDecrement: () {
-                              controller.decrement(
-                                  controller.cartItems[index].product);
-                            },
-                            onIncrement: () {
-                              controller.increment(
-                                  controller.cartItems[index].product);
-                            },
-                            item: controller.cartItems[index]),
-                      )
+                  itemCount: controller.cartItems.length,
+                  itemBuilder: (context, index) => CartWidget(
+                    price: controller
+                        .totalForProduct(controller.cartItems[index]),
+                    onDecrement: () {
+                      controller.decrement(
+                        controller.cartItems[index].product,
+                        controller.cartItems[index].unit,
+                      );
+                    },
+                    onIncrement: () {
+                      controller.increment(
+                        controller.cartItems[index].product,
+                        controller.cartItems[index].unit,
+                      );
+                    },
+                    item: controller.cartItems[index],
+                  ),
+                )
                     : Center(
-                        child: Text('لا يوجد عناصر في السلة'.tr,
-                            style:
-                                bold16.copyWith(color: AppColor.primaryColor)),
-                      ),
+                  child: Text('لا يوجد عناصر في السلة'.tr,
+                      style:
+                      bold16.copyWith(color: AppColor.primaryColor)),
+                ),
               )
             ],
           ),
@@ -98,10 +105,10 @@ class CartWidget extends StatelessWidget {
 
   const CartWidget(
       {super.key,
-      required this.item,
-      required this.onIncrement,
-      required this.onDecrement,
-      required this.price});
+        required this.item,
+        required this.onIncrement,
+        required this.onDecrement,
+        required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +149,13 @@ class CartWidget extends StatelessWidget {
                 Text(
                   item.product.name,
                   style: regular14,
+                ),
+                const SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  item.unit.unit,
+                  style: bold12,
                 ),
                 const SizedBox(
                   height: 8,

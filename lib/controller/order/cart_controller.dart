@@ -15,45 +15,57 @@ class CartController extends GetxController {
 
   final List<CartItem> cartItems = [];
 
-  void addProduct(ProductData product) {
-    final index = cartItems.indexWhere((item) => item.product.id == product.id);
+  void addProduct(ProductData product, ProductUnit unit) {
+    final index = cartItems.indexWhere(
+          (item) => item.product.id == product.id && item.unit.id == unit.id,
+    );
     if (index >= 0) {
       cartItems[index].quantity++;
     } else {
-      cartItems.add(CartItem(product: product));
+      cartItems.add(CartItem(product: product, unit: unit));
     }
     update();
   }
 
-  void increment(ProductData product) {
-    final item = cartItems.firstWhere((item) => item.product.id == product.id);
+  void increment(ProductData product, ProductUnit unit) {
+    final item = cartItems.firstWhere(
+          (item) => item.product.id == product.id && item.unit.id == unit.id,
+    );
     item.quantity++;
     update();
   }
 
-  void decrement(ProductData product) {
-    final item = cartItems.firstWhere((item) => item.product.id == product.id);
+  void decrement(ProductData product, ProductUnit unit) {
+    final item = cartItems.firstWhere(
+          (item) => item.product.id == product.id && item.unit.id == unit.id,
+    );
     if (item.quantity > 1) {
       item.quantity--;
     } else {
-      cartItems.removeWhere((item) => item.product.id == product.id);
+      cartItems.removeWhere(
+            (item) => item.product.id == product.id && item.unit.id == unit.id,
+      );
     }
     update();
   }
 
-  void removeProduct(ProductData product) {
-    cartItems.removeWhere((item) => item.product.id == product.id);
+  void removeProduct(ProductData product, ProductUnit unit) {
+    cartItems.removeWhere(
+          (item) => item.product.id == product.id && item.unit.id == unit.id,
+    );
     update();
   }
 
-  int quantityOf(ProductData product) {
-    final item =
-        cartItems.firstWhereOrNull((item) => item.product.id == product.id);
+  int quantityOf(ProductData product, ProductUnit unit) {
+    final item = cartItems.firstWhereOrNull(
+          (item) => item.product.id == product.id && item.unit.id == unit.id,
+    );
     return item?.quantity ?? 0;
   }
 
+
   double totalForProduct(CartItem item) {
-    return item.product.price * item.quantity;
+    return item.unit.price * item.quantity;
   }
 
   double get total {
@@ -69,13 +81,16 @@ class CartController extends GetxController {
       Utils.showFlutterToast('Cart is empty'.tr);
     } else {
       Utils.showLoadingDialog();
+
       List<Map<String, dynamic>> cartItemsData = cartItems.map((item) {
         return {
           "productId": item.product.id,
+          "unitId": item.unit.id,
           "quantity": item.quantity,
-          "price": item.product.price
+          "price": item.unit.price
         };
       }).toList();
+
       double totalPrice = total;
 
       bool success = await RestApi.addOrder(jsonEncode({
@@ -91,8 +106,9 @@ class CartController extends GetxController {
         Utils.showSnackbar('Successfully !', 'Order added successfully');
         Get.offAll(() => const NavBarScreen());
       } else {
-        Utils.showSnackbar('Please try again', 'an error occurred');
+        Utils.showSnackbar('Please try again', 'An error occurred');
       }
     }
   }
+
 }

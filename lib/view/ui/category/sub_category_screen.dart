@@ -21,7 +21,7 @@ class SubCategoryScreen extends StatelessWidget {
         title:  Text(
           'الاصناف الفرعية'.tr,
           style: const TextStyle(
-            color: Colors.white,
+            // color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),

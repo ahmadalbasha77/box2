@@ -68,7 +68,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     },
                     child: const Text(
                       "Send Code",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
                 ),
@@ -80,7 +80,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   child: const Text(
                     "Back to Login",
                     style: TextStyle(
-                        color: AppColor.primaryColor2,
+                        color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
