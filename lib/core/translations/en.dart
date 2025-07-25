@@ -69,6 +69,12 @@ const Map<String, String> en = {
   'Confirm':'Confirm',
   'Full Name':'Full Name',
   'المنتج بدون صورة':'Product without image',
+  'JD':'JD',
+  "This is required": "This is required",
+  "Must be at least 3 characters": "Must be at least 3 characters",
+  "Please enter a valid phone number": "Please enter a valid phone number",
+  "Please enter valid email": "Please enter a valid email",
+  "Password does not match": "Password does not match",
 
 
 

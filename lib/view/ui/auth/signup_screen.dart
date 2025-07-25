@@ -48,6 +48,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   CustomTextFiled(
+                      validator: (email) => Validation.isEmail(email),
                       label: 'Email',
                       icon: Icons.email,
                       controller: _controller.email),

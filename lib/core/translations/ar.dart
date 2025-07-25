@@ -73,6 +73,12 @@ Map<String, String> ar = {
   'المنتج بدون صورة'
 :'المنتج بدون صورة',
   'JD':'دينار',
+  "This is required": "هذا الحقل مطلوب",
+  "Must be at least 3 characters": "يجب أن يكون 3 أحرف على الأقل",
+  "Please enter a valid phone number": "يرجى ادخال رقم هاتف صحيح",
+  "Please enter valid email": "يرجى ادخال بريد الكتروني صحيح",
+  "Please enter valid password": "يرجى ادخال كلمة المرور صحيحة",
+  "Password does not match": "كلمة المرور غير متطابقة",
 
 
 

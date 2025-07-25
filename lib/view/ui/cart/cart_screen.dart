@@ -25,22 +25,25 @@ class CartScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-          child: GetBuilder<CartController>(builder: (logic) {
+          child: GetBuilder<CartController>(builder: (controller) {
             return CustomButton(
               title:
-              '${'تنفيذ الطلب'.tr} ${controller.total.toStringAsFixed(2)} ${'JD'.tr}'
-                  '',
+              '${'تنفيذ الطلب'.tr} ${controller.total.toStringAsFixed(2)} ${'JD'.tr}',
               onTap: () async {
-                if (mySharedPreferences.isLogin) {
-                  if (await Utils.showAreYouSureDialog(
-                      title: 'تنفيذ الطلب'.tr)) {
-                    controller.addOrder();
-                  }
-                } else {
+                if (!mySharedPreferences.isLogin) {
                   Utils.showSnackbar('تنبيه !', 'يرجى تسجيل الدخول');
-                  Get.to(() => LoginScreen(
-                    isOpen: true,
-                  ));
+                  Get.to(() => LoginScreen(isOpen: true));
+                  return;
+                }
+
+                if (controller.total < 150) {
+                  Utils.showSnackbar('تنبيه', 'أقل قيمة للطلب هي 150 دينار');
+                  return;
+                }
+
+                final confirmed = await Utils.showAreYouSureDialog(title: 'تنفيذ الطلب'.tr);
+                if (confirmed) {
+                  controller.addOrder();
                 }
               },
             );

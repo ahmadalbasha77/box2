@@ -31,10 +31,11 @@ class Validation {
     }
     return null;
   }
-
   static String? isRequired(String? text) {
     if (Utils.isEmpty(text)) {
       return "This is required".tr;
+    } else if (text!.trim().length < 3) {
+      return "Must be at least 3 characters".tr;
     }
     return null;
   }
