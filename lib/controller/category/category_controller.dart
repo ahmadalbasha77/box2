@@ -54,12 +54,12 @@ class CategoryController extends GetxController {
   }
 
   void searchOnChange() {
-    if (searchOnStoppedTyping.value != null) {
-      searchOnStoppedTyping.value!.cancel();
-    }
-    searchOnStoppedTyping.value = Timer(const Duration(milliseconds: 300), () {
-      refreshScreen();
-    });
+    // if (searchOnStoppedTyping.value != null) {
+    //   searchOnStoppedTyping.value!.cancel();
+    // }
+    // searchOnStoppedTyping.value = Timer(const Duration(milliseconds: 300), () {
+    //   refreshScreen();
+    // });
   }
 
   void refreshScreen() {

@@ -20,7 +20,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('السلة'.tr),
+        title: Text('السلة'.tr,style: const TextStyle(color: Colors.black),),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -36,8 +36,8 @@ class CartScreen extends StatelessWidget {
                   return;
                 }
 
-                if (controller.total < 150) {
-                  Utils.showSnackbar('تنبيه', 'أقل قيمة للطلب هي 150 دينار');
+                if (controller.total < 100) {
+                  Utils.showSnackbar('تنبيه', 'أقل قيمة للطلب هي 100 دينار');
                   return;
                 }
 

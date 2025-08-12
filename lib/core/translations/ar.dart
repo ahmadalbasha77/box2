@@ -79,6 +79,8 @@ Map<String, String> ar = {
   "Please enter valid email": "يرجى ادخال بريد الكتروني صحيح",
   "Please enter valid password": "يرجى ادخال كلمة المرور صحيحة",
   "Password does not match": "كلمة المرور غير متطابقة",
+  "See All": "عرض الكل",
+
 
 
 

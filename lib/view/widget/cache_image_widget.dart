@@ -19,23 +19,10 @@ class CacheImageWidget extends StatelessWidget {
       width: width,
       fit: fit,
       imageUrl: image,
-      errorWidget: (context, url, error) =>  Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.shopping_cart_outlined,
-            color: Colors.black26,
-            size: 50,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            'المنتج بدون صورة'.tr,
-            style: regular10,
-          )
-        ],
+      errorWidget: (context, url, error) => const Icon(
+        Icons.shopping_cart_outlined,
+        color: Colors.black26,
+        size: 50,
       ),
     );
   }

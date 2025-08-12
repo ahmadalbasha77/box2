@@ -166,8 +166,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ]
-
-
           ],
         ),
       ),
@@ -176,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: AppColor.primaryColor,
         title: Text('الصفحة الرئيسية'.tr,
-            style: bold18),
+            style: bold18.copyWith(color: Colors.black)),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: Padding(
@@ -215,10 +213,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     AdsWidget(),
                     const SizedBox(height: 20),
-                    const SectionWidget(title: 'العلامات الغذائية'),
-                    BrandListWidget(),
-                    const SectionWidget(title: 'الأصناف', actionText: 'عرض الكل'),
+                    const SectionWidget(
+                      title: 'الأصناف',
+                    ),
                     CategoryHomeListWidget(),
+                    SectionWidget(title: 'العلامات الغذائية',actionText: 'See All'.tr,),
+                    BrandListWidget(),
+
                     const SectionWidget(title: 'المنتجات الأكثر مبيعاً'),
                   ],
                 ),
@@ -337,7 +338,7 @@ class AdsWidget extends StatelessWidget {
                   .toList(),
               options: CarouselOptions(
                 onPageChanged: _controller.onPageChanged,
-                aspectRatio: 16 / 7,
+                aspectRatio: 16 / 6,
                 viewportFraction: 0.8,
                 autoPlay: true,
                 enlargeCenterPage: true,

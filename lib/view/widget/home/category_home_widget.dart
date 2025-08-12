@@ -14,25 +14,21 @@ class CategoryHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(() => SubCategoryScreen(), arguments: {'id': data.id});
-      },
+      onTap: () =>
+          Get.to(() => SubCategoryScreen(), arguments: {'id': data.id}),
       child: Container(
-        width: 130,
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
-            BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 6),
+            BoxShadow(color: Colors.grey.withOpacity(0.08), blurRadius: 6)
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: 100,
+            Expanded(
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
@@ -44,17 +40,18 @@ class CategoryHomeWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 6),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Text(
                 data.name,
                 textAlign: TextAlign.center,
-                style: regular16,
+                style: regular14,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            const SizedBox(height: 6),
           ],
         ),
       ),

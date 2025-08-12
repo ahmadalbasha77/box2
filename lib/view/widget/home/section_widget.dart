@@ -4,6 +4,8 @@ import 'package:box_app/view/ui/category/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../ui/home/brand_screen.dart';
+
 class SectionWidget extends StatelessWidget {
   final String title;
   final String? actionText;
@@ -21,7 +23,7 @@ class SectionWidget extends StatelessWidget {
           if (actionText != null)
             TextButton(
               onPressed: () {
-                Get.to(() =>  CategoryScreen());
+                Get.to(() =>  BrandScreen());
               },
               child: Text(actionText!.tr,
                   style: regular14.copyWith(color: AppColor.primaryColor)),

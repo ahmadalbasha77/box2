@@ -39,7 +39,7 @@ class CustomTextFiled extends StatelessWidget {
       child: TextFormField(
         keyboardType:keyboardType,
         obscureText: obscureText,
-        validator: validator ?? (value) => Validation.isRequired(value),
+        validator: validator ?? (value) => Validation.isRequired3(value),
         controller: controller,
         decoration: InputDecoration(
           suffixIcon: suffixIcon,

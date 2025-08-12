@@ -25,7 +25,7 @@ class ProductScreen extends StatelessWidget {
         title: Text(
           "المنتجات".tr,
           style: const TextStyle(
-            // color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -46,7 +46,14 @@ class ProductScreen extends StatelessWidget {
                   SearchTextFiled(
                     hint: 'ابحث عن منتج'.tr,
                     controller: logic.controllerSearch,
-                    onChanged: (p0) => logic.searchOnChange(),
+                    onChanged: (value) {
+                      if (value.trim().isEmpty) {
+                        logic
+                            .refreshScreen(); // يرجع البيانات الأصلية إذا الحقل فاضي
+                      }
+                    },
+                    onSearch: () =>
+                        logic.refreshScreen(), // ينفذ البحث أو الريفريش
                   ),
                   const SizedBox(height: 20),
                   if (isCart) const BrandProductWidget(),
@@ -78,12 +85,15 @@ class SearchTextFiled extends StatelessWidget {
   final String hint;
   final void Function(String) onChanged;
   final TextEditingController controller;
+  final VoidCallback onSearch; // إضافة Callback للبحث
 
-  const SearchTextFiled(
-      {super.key,
-        required this.onChanged,
-        required this.controller,
-        required this.hint});
+  const SearchTextFiled({
+    super.key,
+    required this.onChanged,
+    required this.controller,
+    required this.hint,
+    required this.onSearch,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +110,20 @@ class SearchTextFiled extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        onChanged: onChanged,
         controller: controller,
+        onChanged: (value) {
+          if (value.trim().isEmpty) {
+            onSearch(); // يعمل Refresh إذا الحقل فاضي
+          }
+          onChanged(value); // يمرر القيمة للـ logic
+        },
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColor.primaryColor,
+          prefixIcon: const Icon(Icons.search, color: AppColor.primaryColor),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.arrow_forward, color: AppColor.primaryColor),
+            onPressed: onSearch, // ينفذ البحث عند الضغط
           ),
           hintText: hint,
           hintStyle: regular14.copyWith(color: Colors.grey),
@@ -197,7 +213,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               borderRadius: BorderRadius.circular(12),
               child: CacheImageWidget(
                 image: widget.data.imageUrl,
-                width: 100,
+                width: 110,
                 height: 100,
                 fit: BoxFit.cover,
               ),
@@ -214,7 +230,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 /// الاسم
                 Text(
                   widget.data.name,
-                  style: bold14.copyWith(color: Colors.black87),
+                  style: bold16.copyWith(color: Colors.black87),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -256,12 +272,12 @@ class _ProductWidgetState extends State<ProductWidget> {
                     }).toList(),
                   ),
 
-                const SizedBox(height: 6),
+                const SizedBox(height: 10),
 
                 /// السعر
                 Text(
                   '${selectedUnit.price.toStringAsFixed(2)} ${'JD'.tr}',
-                  style: bold14.copyWith(color: AppColor.primaryColor),
+                  style: bold16.copyWith(color: AppColor.primaryColor),
                 ),
 
                 const SizedBox(height: 8),
@@ -335,7 +351,7 @@ class AnimatedAddRemoveButton extends StatelessWidget {
                     ? IconButton(
                   key: const ValueKey('remove'),
                   icon: Icon(Icons.remove,
-                      color: Colors.white, size: iconSize),
+                      color: Colors.black, size: iconSize),
                   onPressed: () =>
                       cartController.decrement(product, unit),
                   padding: EdgeInsets.zero,
@@ -373,7 +389,7 @@ class AnimatedAddRemoveButton extends StatelessWidget {
                       '$count',
                       key: ValueKey<int>(count),
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                       ),
@@ -381,7 +397,7 @@ class AnimatedAddRemoveButton extends StatelessWidget {
                         : Icon(
                       Icons.add,
                       key: const ValueKey('add'),
-                      color: Colors.white,
+                      color: Colors.black,
                       size: iconSize,
                     ),
                   ),
@@ -397,7 +413,7 @@ class AnimatedAddRemoveButton extends StatelessWidget {
                     ? IconButton(
                   key: const ValueKey('add_more'),
                   icon: Icon(Icons.add,
-                      color: Colors.white, size: iconSize),
+                      color: Colors.black, size: iconSize),
                   onPressed: () =>
                       cartController.increment(product, unit),
                   padding: EdgeInsets.zero,

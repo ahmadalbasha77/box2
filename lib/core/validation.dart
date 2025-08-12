@@ -31,7 +31,15 @@ class Validation {
     }
     return null;
   }
+
   static String? isRequired(String? text) {
+    if (Utils.isEmpty(text)) {
+      return "This is required".tr;
+    }
+    return null;
+  }
+
+  static String? isRequired3(String? text) {
     if (Utils.isEmpty(text)) {
       return "This is required".tr;
     } else if (text!.trim().length < 3) {
