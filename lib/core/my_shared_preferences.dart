@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/order/cart_model.dart';
 
 class MySharedPreferences {
   static late SharedPreferences _sharedPreferences;
@@ -31,6 +35,26 @@ class MySharedPreferences {
   // Future<void> clearUserData() async {
   //   await _sharedPreferences.remove(keyUserData);
   // }
+  Future<void> saveCart(List<CartItem> cartItems) async {
+    final cartJson =
+    cartItems.map((e) => e.toJson()).toList();
+    await _sharedPreferences.setString(
+      keyCart,
+      jsonEncode(cartJson),
+    );
+  }
+  List<CartItem> getCart() {
+    final cartString = _sharedPreferences.getString(keyCart);
+    if (cartString == null) return [];
+
+    final List decoded = jsonDecode(cartString);
+    return decoded
+        .map((e) => CartItem.fromJson(e))
+        .toList();
+  }
+  Future<void> clearCart() async {
+    await _sharedPreferences.remove(keyCart);
+  }
 
   bool get isLogin => _sharedPreferences.getBool(keyIsLogin) ?? false;
 
@@ -94,3 +118,5 @@ const String keyToken = "key_token";
 const String keyIP = "key_ip";
 const String keyLanguage = "key_language";
 const String keyBranchId = "key_branch_id";
+const String keyCart = "key_cart";
+

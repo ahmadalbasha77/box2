@@ -17,7 +17,7 @@ class CategoryHomeWidget extends StatelessWidget {
       onTap: () =>
           Get.to(() => SubCategoryScreen(), arguments: {'id': data.id}),
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(7),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),

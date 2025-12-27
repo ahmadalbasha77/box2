@@ -105,6 +105,7 @@ class ProductUnit {
   double size;
   int quantity;
   bool isDefault;
+  DateTime? endDate;
 
   ProductUnit({
     required this.id,
@@ -113,6 +114,8 @@ class ProductUnit {
     required this.size,
     required this.quantity,
     required this.isDefault,
+    this.endDate,
+
   });
 
   factory ProductUnit.fromJson(Map<String, dynamic> json) => ProductUnit(
@@ -124,6 +127,10 @@ class ProductUnit {
         ? json["quantity"]
         : (json["quantity"] ?? 0).toDouble().toInt(),
     isDefault: json["isDefault"] ?? false,
+    endDate: json["endDate"] != null
+        ? DateTime.parse(json["endDate"])
+        : null,
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -133,5 +140,7 @@ class ProductUnit {
     "size": size,
     "quantity": quantity,
     "isDefault": isDefault,
+    "endDate": endDate?.toIso8601String(),
+
   };
 }

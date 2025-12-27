@@ -4,11 +4,11 @@ import 'package:pinput/pinput.dart';
 import 'app_color.dart';
 
 ThemeData themeApp = ThemeData(
-  fontFamily: 'tejwal',
+  fontFamily: 'cairo',
   scaffoldBackgroundColor: Colors.grey[200],
   appBarTheme: const AppBarTheme(
     titleTextStyle:
-        TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'tejwal'),
+        TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'cairo'),
     centerTitle: true,
     iconTheme: IconThemeData(color: Colors.white),
     backgroundColor: AppColor.primaryColor,

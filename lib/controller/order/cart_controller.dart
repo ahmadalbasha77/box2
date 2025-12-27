@@ -15,6 +15,24 @@ class CartController extends GetxController {
 
   final List<CartItem> cartItems = [];
 
+  void _loadCart() {
+    final savedCart = mySharedPreferences.getCart();
+    cartItems
+      ..clear()
+      ..addAll(savedCart);
+
+    update();
+  }
+  void _saveCart() {
+    mySharedPreferences.saveCart(cartItems);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadCart();
+  }
+
   void addProduct(ProductData product, ProductUnit unit) {
     final index = cartItems.indexWhere(
           (item) => item.product.id == product.id && item.unit.id == unit.id,
@@ -24,6 +42,8 @@ class CartController extends GetxController {
     } else {
       cartItems.add(CartItem(product: product, unit: unit));
     }
+    _saveCart(); // ✅
+
     update();
   }
 
@@ -32,6 +52,8 @@ class CartController extends GetxController {
           (item) => item.product.id == product.id && item.unit.id == unit.id,
     );
     item.quantity++;
+    _saveCart(); // ✅
+
     update();
   }
 
@@ -46,6 +68,8 @@ class CartController extends GetxController {
             (item) => item.product.id == product.id && item.unit.id == unit.id,
       );
     }
+    _saveCart(); // ✅
+
     update();
   }
 
@@ -53,6 +77,8 @@ class CartController extends GetxController {
     cartItems.removeWhere(
           (item) => item.product.id == product.id && item.unit.id == unit.id,
     );
+    _saveCart(); // ✅
+
     update();
   }
 
@@ -103,6 +129,8 @@ class CartController extends GetxController {
 
       if (success) {
         cartItems.clear();
+        await mySharedPreferences.clearCart(); // ✅
+
         Utils.showSnackbar('Successfully !', 'Order added successfully');
         Get.offAll(() => const NavBarScreen());
       } else {

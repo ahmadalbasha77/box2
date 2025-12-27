@@ -56,8 +56,8 @@ class ProductScreen extends StatelessWidget {
                         logic.refreshScreen(), // ينفذ البحث أو الريفريش
                   ),
                   const SizedBox(height: 20),
-                  if (isCart) const BrandProductWidget(),
-                  if (isCart) const SizedBox(height: 20),
+                  // if (isCart) const BrandProductWidget(),
+                  // if (isCart) const SizedBox(height: 20),
                   Expanded(
                     child: PagedListView<int, ProductData>(
                       pagingController: logic.pagingController,
@@ -139,6 +139,9 @@ class SearchTextFiled extends StatelessWidget {
       ),
     );
   }
+}
+String _formatDate(DateTime date) {
+  return '${date.day}/${date.month}/${date.year}';
 }
 
 class ProductWidget extends StatefulWidget {
@@ -281,6 +284,19 @@ class _ProductWidgetState extends State<ProductWidget> {
                 ),
 
                 const SizedBox(height: 8),
+                if (selectedUnit.endDate != null)
+                  Text(
+                    'ينتهي في: ${_formatDate(selectedUnit.endDate!)}',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: selectedUnit.endDate!.isBefore(DateTime.now())
+                          ? Colors.red
+                          : Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
+                const SizedBox(height: 8),
 
                 /// زر إضافة أو نفذت الكمية
                 widget.data.isSoldOut
@@ -341,6 +357,7 @@ class AnimatedAddRemoveButton extends StatelessWidget {
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               /// زر الإنقاص
               AnimatedSwitcher(

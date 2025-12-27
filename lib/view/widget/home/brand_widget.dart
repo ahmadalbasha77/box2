@@ -20,8 +20,8 @@ class BrandWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Container(
           padding: const EdgeInsets.all(15),
-          height: 90,
-          width: 90,
+          height: 120,
+          width: 100,
           decoration:
               const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: CacheImageWidget(

@@ -126,7 +126,7 @@ class CategoryGridItem extends StatelessWidget {
         Get.to(() => const ProductScreen(), arguments: {'id': data.id});
       },
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(7),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),

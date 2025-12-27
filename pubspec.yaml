@@ -65,6 +65,7 @@ dependencies:
 
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -128,6 +129,14 @@ flutter:
         - asset: assets/font/Tajawal-Medium.ttf
           weight: 500
         - asset: assets/font/Tajawal-Regular.ttf
+          weight: 400
+    - family: cairo
+      fonts:
+        - asset: assets/font/Cairo-Bold.ttf
+          weight: 600
+        - asset: assets/font/Cairo-Medium.ttf
+          weight: 500
+        - asset: assets/font/Cairo-Regular.ttf
           weight: 400
 
   # For details regarding fonts from package dependencies,
