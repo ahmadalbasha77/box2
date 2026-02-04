@@ -1,3 +1,4 @@
+import 'package:box_app/model/home/category_model.dart';
 import 'package:box_app/model/home/sub_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,8 @@ import '../product/product_screen.dart';
 import 'category_screen.dart';
 
 class SubCategoryScreen extends StatelessWidget {
-  SubCategoryScreen({super.key});
+  final CategoryData category;
+  SubCategoryScreen({super.key, required this.category});
 
   final _controller = SubCategoryController.to;
 
@@ -35,8 +37,80 @@ class SubCategoryScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
+
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+
+              Hero(
+                tag: 'category_${category.id}',
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    height: 150, // أصغر
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.12),
+                          blurRadius: 18,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(18),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          CacheImageWidget(
+                            image: category.imageUrl,
+                            fit: BoxFit.cover,
+                          ),
+
+                          /// Gradient overlay (يعطي فخامة)
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.black.withOpacity(0.05),
+                                  Colors.black.withOpacity(0.25),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          /// اسم الصنف (اختياري)
+                          Positioned(
+                            bottom: 12,
+                            right: 12,
+                            child: Container(
+                              padding:
+                              const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                category.name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+            const SizedBox(height: 5),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),

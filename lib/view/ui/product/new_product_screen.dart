@@ -1,21 +1,21 @@
 import 'package:box_app/controller/home/product_controller.dart';
 import 'package:box_app/model/home/product_model.dart';
-import 'package:box_app/view/ui/product/product_widget.dart';
 import 'package:box_app/view/widget/cart_icon_widget.dart';
 import 'package:box_app/view/widget/home/brand_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../../controller/home/new_product_controller.dart';
 import '../../../controller/order/cart_controller.dart';
 import '../../../core/app_color.dart';
 import '../../../core/font_style.dart';
 import '../../widget/cache_image_widget.dart';
 
-class ProductScreen extends StatelessWidget {
+class NewProductScreen extends StatelessWidget {
   final bool isCart;
   final int subCategoryId;
 
-  const ProductScreen({super.key, this.isCart = true, this.subCategoryId = 0});
+  const NewProductScreen({super.key, this.isCart = true, this.subCategoryId = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ProductScreen extends StatelessWidget {
       // appBar: _buildAppBar(),
       appBar: AppBar(
         title: Text(
-          'المنتجات'.tr,
+          'وصل حديثاً'.tr,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -42,8 +42,8 @@ class ProductScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: GetBuilder<ProductController>(
-        init: ProductController(),
+      body: GetBuilder<NewProductController>(
+        init: NewProductController(),
         builder: (logic) {
           return Column(
             children: [
@@ -70,14 +70,15 @@ class ProductScreen extends StatelessWidget {
     );
   }
 
+
   Widget _buildBrand() {
     return  Padding(
-      padding: EdgeInsets.symmetric(horizontal: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: BrandProductWidget(subCategoryId: subCategoryId,),
     );
   }
 
-  Widget _buildList(ProductController logic) {
+  Widget _buildList(NewProductController logic) {
     return Expanded(
       child: PagedListView<int, ProductData>(
         pagingController: logic.pagingController,
@@ -95,6 +96,8 @@ class ProductScreen extends StatelessWidget {
   }
 }
 
+/// =================================================================
+/// PRODUCT CARD (HORIZONTAL – BALANCED)
 class HorizontalProductCard extends StatefulWidget {
   final ProductData data;
 
@@ -118,119 +121,108 @@ class HorizontalProductCardState extends State<HorizontalProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    const primary = AppColor.primaryColor;
-
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      height: 165, // زيادة الطول قليلاً لاستيعاب البيانات الجديدة
+      height: 150,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: Row(
         children: [
-          /// 1. IMAGE SECTION WITH BADGES
-          Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: ClipRRect(
-                  borderRadius:
-                      const BorderRadius.horizontal(right: Radius.circular(15)),
-                  child: CacheImageWidget(
-                    image: widget.data.imageUrl,
-                    width: 120,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              /// شارة وصل حديثاً
-              if (widget.data.newArrivals)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: _buildBadge("وصل حديثاً".tr, Colors.green),
-                ),
-
-              /// شارة عرض مميز
-              if (widget.data.offer ?? false)
-                Positioned(
-                  top: widget.data.newArrivals == true ? 35 : 8,
-                  right: 8,
-                  child: _buildBadge("عرض خاص".tr, Colors.orange.shade700),
-                ),
-            ],
+          /// IMAGE
+          ClipRRect(
+            borderRadius: const BorderRadius.horizontal(
+              right: Radius.circular(14),
+            ),
+            child: CacheImageWidget(
+              image: widget.data.imageUrl,
+              width: 120,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
 
-          /// 2. CONTENT SECTION
+          /// CONTENT
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// اسم المنتج
+                  /// NAME
                   Text(
                     widget.data.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        height: 1.3,
-                        fontFamily: 'Cairo'),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      height: 1.25,
+                    ),
                   ),
 
-                  const SizedBox(height: 8),
-
-                  /// الوحدات (Chips)
-                  _buildUnitSelector(),
-
-                  const Spacer(),
-
-                  /// تاريخ الانتهاء (بشكل بسيط وواضح)
-                  if (widget.data.endDate != null) _buildExpiryDate(),
-
-                  const SizedBox(height: 8),
+                  /// UNITS
+                  SizedBox(
+                    height: 26,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: widget.data.productUnits.map((unit) {
+                        final selected = unit.id == selectedUnit.id;
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: GestureDetector(
+                            onTap: () => setState(() => selectedUnit = unit),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: selected
+                                    ? AppColor.primaryColor
+                                    : Colors.grey[100],
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                unit.unit,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  color: selected
+                                      ? Colors.white
+                                      : Colors.grey[700],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
 
                   /// PRICE + CART
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.data.offer == true &&
-                              selectedUnit.oldPrice != null)
-                            Text(
-                              '${selectedUnit.oldPrice!.toStringAsFixed(2)} ${'JD'.tr}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                          Text(
-                            '${selectedUnit.price.toStringAsFixed(2)} ${'JD'.tr}',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                              color: primary,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        '${selectedUnit.price.toStringAsFixed(2)} ${'JD'.tr}',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                          color: AppColor.primaryColor,
+                        ),
                       ),
                       widget.data.isSoldOut
-                          ? _buildSoldOutBadge()
+                          ? Text(
+                              'نفذت'.tr,
+                              style: regular12.copyWith(color: Colors.grey),
+                            )
                           : HorizontalCartButton(
                               product: widget.data,
                               unit: selectedUnit,
@@ -245,94 +237,6 @@ class HorizontalProductCardState extends State<HorizontalProductCard> {
       ),
     );
   }
-
-  /// ويدجت الشارات (Badges)
-  Widget _buildBadge(String text, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-            color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  /// اختيار الوحدات
-  Widget _buildUnitSelector() {
-    return SizedBox(
-      height: 28,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: widget.data.productUnits.map((unit) {
-          final selected = unit.id == selectedUnit.id;
-          return Padding(
-            padding: const EdgeInsets.only(left: 6),
-            child: InkWell(
-              onTap: () => setState(() => selectedUnit = unit),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: selected ? AppColor.primaryColor : Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                      color: selected
-                          ? AppColor.primaryColor
-                          : Colors.transparent),
-                ),
-                child: Text(
-                  unit.unit,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: selected ? Colors.white : Colors.grey[600],
-                  ),
-                ),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  /// ويدجت تاريخ الانتهاء
-  Widget _buildExpiryDate() {
-    final bool isExpired = widget.data.endDate!.isBefore(DateTime.now());
-    return Row(
-      children: [
-        Icon(Icons.timer_outlined,
-            size: 14, color: isExpired ? Colors.red : Colors.orange),
-        const SizedBox(width: 4),
-        Text(
-          '${'ينتهي:'.tr} ${formatDate(widget.data.endDate!)}',
-          style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              color: isExpired ? Colors.red : Colors.grey[600]),
-        ),
-      ],
-    );
-  }
-
-  /// ويدجت نفذت الكمية
-  Widget _buildSoldOutBadge() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-          color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
-      child: Text('نفذت'.tr,
-          style: const TextStyle(
-              color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold)),
-    );
-  }
 }
 
 /// =================================================================
@@ -341,7 +245,7 @@ class HorizontalCartButton extends StatelessWidget {
   final ProductData product;
   final ProductUnit unit;
 
-  const HorizontalCartButton({super.key,
+  const HorizontalCartButton({
     required this.product,
     required this.unit,
   });

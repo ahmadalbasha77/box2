@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '1.9.22'
     repositories {
         google()
         mavenCentral()
@@ -19,11 +19,22 @@ allprojects {
 }
 
 rootProject.buildDir = "../build"
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
     project.evaluationDependsOn(":app")
+}
+
+/**
+ * 🔴 الحل الحقيقي لمشكلة flutter_app_badger + lStar
+ * فرض compileSdkVersion على كل مكتبات Android
+ */
+subprojects {
+    plugins.withId("com.android.library") {
+        android {
+            compileSdkVersion 34
+        }
+    }
 }
 
 tasks.register("clean", Delete) {

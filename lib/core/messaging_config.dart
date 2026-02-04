@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+// import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_hms_gms_availability/flutter_hms_gms_availability.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:huawei_push/huawei_push.dart' as hms_push;
@@ -61,9 +61,9 @@ class MessagingConfig {
 class FirebaseMessagingConfig {
   static Future<void> init() async {
     mySharedPreferences.deviceToken = await FirebaseMessaging.instance.getToken() ?? '';
-    if (await FlutterAppBadger.isAppBadgeSupported()) {
-      FlutterAppBadger.removeBadge();
-    }
+    // if (await FlutterAppBadger.isAppBadgeSupported()) {
+    //   FlutterAppBadger.removeBadge();
+    // }
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     await MessagingConfig.flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(MessagingConfig.channel);
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -121,9 +121,9 @@ class HuaweiMessagingConfig {
         log('Device token error : ${value.toString()}');
       },
     );
-    if (await FlutterAppBadger.isAppBadgeSupported()) {
-      FlutterAppBadger.removeBadge();
-    }
+    // if (await FlutterAppBadger.isAppBadgeSupported()) {
+    //   FlutterAppBadger.removeBadge();
+    // }
     await hms_push.Push.registerBackgroundMessageHandler(hmsMessagingBackgroundHandler);
     onMessage();
   }

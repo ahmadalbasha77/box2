@@ -65,6 +65,10 @@ class ProductData {
   String description;
   String imageUrl;
   bool isSoldOut;
+  bool offer;
+  bool newArrivals;
+  DateTime? endDate;
+
   List<ProductUnit> productUnits;
 
   ProductData({
@@ -73,7 +77,10 @@ class ProductData {
     required this.description,
     required this.imageUrl,
     required this.isSoldOut,
+    required this.offer,
+    required this.newArrivals,
     required this.productUnits,
+    required this.endDate,
   });
 
   factory ProductData.fromJson(Map<String, dynamic> json) {
@@ -84,6 +91,12 @@ class ProductData {
       description: json["description"] ?? '',
       imageUrl: json["imageUrl"] ?? '',
       isSoldOut: json["isSoldOut"] ?? false,
+      offer: json["offer"] ?? false,
+      newArrivals: json["newArrivals"] ?? false,
+      endDate: json["endDate"] != null
+          ? DateTime.parse(json["endDate"])
+          : null,
+
       productUnits: units.map((e) => ProductUnit.fromJson(e)).toList(),
     );
   }
@@ -94,7 +107,11 @@ class ProductData {
     "description": description,
     "imageUrl": imageUrl,
     "isSoldOut": isSoldOut,
+    "offer": offer,
+    "newArrivals": newArrivals,
     "productUnits": List<dynamic>.from(productUnits.map((x) => x.toJson())),
+    "endDate": endDate?.toIso8601String(),
+
   };
 }
 
@@ -102,6 +119,7 @@ class ProductUnit {
   int id;
   String unit;
   double price;
+  double oldPrice;
   double size;
   int quantity;
   bool isDefault;
@@ -111,6 +129,7 @@ class ProductUnit {
     required this.id,
     required this.unit,
     required this.price,
+    required this.oldPrice,
     required this.size,
     required this.quantity,
     required this.isDefault,
@@ -122,6 +141,7 @@ class ProductUnit {
     id: json["id"] ?? 0,
     unit: json["unit"] ?? '',
     price: (json["price"] ?? 0).toDouble(),
+    oldPrice: (json["oldPrice"] ?? 0).toDouble(),
     size: (json["size"] ?? 0).toDouble(),
     quantity: (json["quantity"] is int)
         ? json["quantity"]
@@ -137,6 +157,7 @@ class ProductUnit {
     "id": id,
     "unit": unit,
     "price": price,
+    "oldPrice": oldPrice,
     "size": size,
     "quantity": quantity,
     "isDefault": isDefault,

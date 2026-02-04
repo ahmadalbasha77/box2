@@ -213,6 +213,37 @@ class RestApi {
     }
   }
 
+  static Future<BrandModel> getBrandBySubCategory({
+    required int pageSize,
+    required int pageIndex,
+    required int subCategoryId,
+    String? search,
+  }) async {
+    String url =
+        '${ApiUrl.baseUrl}api/Brand/GetBradsBySubCategory?subCategoryId=$subCategoryId&PageSize=100';
+    if (search != null) {
+      url += '&name=$search';
+    }
+    Uri uri = Uri.parse(url);
+    var headers = {
+      'accept': 'text/plain',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(uri, headers: headers);
+    log('url : $url');
+    log('aaaa : ${response.statusCode}');
+    log('statusCode : ${response.statusCode}');
+    log('getSeasons : ${response.body}');
+    if (response.statusCode == 200) {
+      return BrandModel.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 400) {
+      return BrandModel.fromJson({});
+    } else {
+      return BrandModel.fromJson({});
+    }
+  }
+
   static Future<CategoryModel> getCategory({
     required int pageSize,
     required int pageIndex,
@@ -305,6 +336,82 @@ class RestApi {
   }) async {
     String url =
         '${ApiUrl.baseUrl}${ApiUrl.product}?PageSize=$pageSize&PageNumber=$pageIndex';
+    if (search != null) {
+      url += '&name=$search';
+    }
+    if (subCategoryId != -1) {
+      url += '&subCategoryId=$subCategoryId';
+    }
+    if (brandId != -1) {
+      url += '&brandId=$brandId';
+    }
+    Uri uri = Uri.parse(url);
+    var headers = {
+      'accept': 'text/plain',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(uri, headers: headers);
+    log('url : $url');
+    log('product : ${response.statusCode}');
+    log('statusCode : ${response.statusCode}');
+    log('getSeasons : ${response.body}');
+    if (response.statusCode == 200) {
+      return ProductModel.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 400) {
+      return ProductModel.fromJson({});
+    } else {
+      return ProductModel.fromJson({});
+    }
+  }
+
+  static Future<ProductModel> getOfferProduct({
+    required int pageSize,
+    required int pageIndex,
+    required int subCategoryId,
+    required int brandId,
+    String? search,
+  }) async {
+    String url =
+        '${ApiUrl.baseUrl}${ApiUrl.product}?PageSize=$pageSize&PageNumber=$pageIndex&Offer=true';
+    if (search != null) {
+      url += '&name=$search';
+    }
+    if (subCategoryId != -1) {
+      url += '&subCategoryId=$subCategoryId';
+    }
+    if (brandId != -1) {
+      url += '&brandId=$brandId';
+    }
+    Uri uri = Uri.parse(url);
+    var headers = {
+      'accept': 'text/plain',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(uri, headers: headers);
+    log('url : $url');
+    log('product : ${response.statusCode}');
+    log('statusCode : ${response.statusCode}');
+    log('getSeasons : ${response.body}');
+    if (response.statusCode == 200) {
+      return ProductModel.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 400) {
+      return ProductModel.fromJson({});
+    } else {
+      return ProductModel.fromJson({});
+    }
+  }
+
+  static Future<ProductModel> getNewProduct({
+    required int pageSize,
+    required int pageIndex,
+    required int subCategoryId,
+    required int brandId,
+    String? search,
+  }) async {
+    String url =
+        '${ApiUrl.baseUrl}${ApiUrl.product}?PageSize=$pageSize&PageNumber=$pageIndex&NewArrivals=true';
     if (search != null) {
       url += '&name=$search';
     }

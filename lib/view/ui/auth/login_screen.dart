@@ -11,93 +11,141 @@ import '../../widget/custom_button.dart';
 
 class LoginScreen extends StatelessWidget {
   final bool isOpen;
-
   LoginScreen({super.key, this.isOpen = false});
 
   final _controller = LoginController.to;
 
   @override
   Widget build(BuildContext context) {
+    final primary = AppColor.primaryColor;
+
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _controller.formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            /// 1. الجزء العلوي (خلفية ملونة مع الصورة)
+            Container(
+              height: MediaQuery.sizeOf(context).height * 0.35,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: primary.withOpacity(0.05),
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(100),
+                ),
+              ),
+              child: Center(
+                child: SafeArea(
+                  child: Image.asset(
                     'assets/images/login.png',
-                    height: MediaQuery.sizeOf(context).height * 0.18,
-                    // color: AppColor.primaryColor,
+                    height: 180,
+                    fit: BoxFit.contain,
                   ),
-                  const SizedBox(height: 30),
-                  Text("Welcome Back!".tr,
-                      style: bold24.copyWith(color: AppColor.primaryColor)),
-                  const SizedBox(height: 20),
-                  CustomTextFiled(
-                      label: 'Email'.tr,
-                      icon: Icons.email_outlined,
-                      controller: _controller.email),
-                  const SizedBox(height: 15),
-                  GetBuilder<LoginController>(builder: (logic) {
-                    return CustomTextFiled(
-                        obscureText: _controller.isObsecure,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              _controller.togglePassword();
-                            },
-                            icon: Icon(
-                              Icons.remove_red_eye_outlined,
-                              color: _controller.isObsecure
-                                  ? Colors.black45
-                                  : AppColor.primaryColor,
-                            )),
-                        label: 'Password'.tr,
-                        icon: Icons.lock_outline,
-                        controller: _controller.password);
-                  }),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                      width: double.infinity,
-                      child: CustomButton(
-                        title: 'Login',
-                        onTap: () {
-                          _controller.login();
-                        },
-                      )),
-                  const SizedBox(height: 0),
-                  // Align(
-                  //   alignment: AlignmentDirectional.centerStart,
-                  //   child: TextButton(
-                  //     onPressed: () {
-                  //       Get.to(() => const ForgetPasswordScreen());
-                  //     },
-                  //     child: const Text(
-                  //       "Forgot Password?",
-                  //       style: TextStyle(color: AppColor.primaryColor2),
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(height: 15),
-                  const SignUpButton(),
-                  const SizedBox(height: 15),
-                  if (!isOpen)
-                    TextButton(
-                      onPressed: () {
-                        Get.offAll(() => const NavBarScreen());
-                      },
-                      child: Text(
-                        "Login as a guest".tr,
-                        style: bold16.copyWith(color: AppColor.primaryColor2),
-                      ),
-                    ),
-                ],
+                ),
               ),
             ),
-          ),
+
+            /// 2. محتوى تسجيل الدخول
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Form(
+                key: _controller.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 40),
+
+                    /// نصوص الترحيب باللغة العربية
+                    Text(
+                      "مرحباً بك مجدداً!".tr,
+                      style: bold24.copyWith(color: Colors.black, fontSize: 28),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "يسعدنا رؤيتك مرة أخرى، قم بتسجيل الدخول لحسابك.".tr,
+                      style: medium14.copyWith(color: Colors.grey),
+                    ),
+
+                    const SizedBox(height: 40),
+
+                    /// حقل البريد الإلكتروني
+                    CustomTextFiled(
+                      label: 'البريد الإلكتروني'.tr,
+                      icon: Icons.email_outlined,
+                      controller: _controller.email,
+                    ),
+                    const SizedBox(height: 20),
+
+                    /// حقل كلمة المرور
+                    GetBuilder<LoginController>(builder: (logic) {
+                      return CustomTextFiled(
+                        obscureText: _controller.isObsecure,
+                        suffixIcon: IconButton(
+                          onPressed: () => _controller.togglePassword(),
+                          icon: Icon(
+                            _controller.isObsecure
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                            color: _controller.isObsecure
+                                ? Colors.grey
+                                : primary,
+                          ),
+                        ),
+                        label: 'كلمة المرور'.tr,
+                        icon: Icons.lock_outline,
+                        controller: _controller.password,
+                      );
+                    }),
+
+                    const SizedBox(height: 35),
+
+                    /// زر تسجيل الدخول
+                    SizedBox(
+                      width: double.infinity,
+                      height: 55,
+                      child: CustomButton(
+                        title: 'تسجيل الدخول'.tr,
+                        onTap: () => _controller.login(),
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    /// أزرار الإنشاء والضيف
+                    Center(
+                      child: Column(
+                        children: [
+                          const SignUpButton(),
+                          const SizedBox(height: 10),
+                          if (!isOpen)
+                            TextButton(
+                              onPressed: () {
+                                Get.offAll(() => const NavBarScreen());
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "المتابعة كزائر".tr,
+                                    style: medium16.copyWith(
+                                      color: Colors.grey.shade600,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Icon(Icons.arrow_forward, size: 16, color: Colors.grey.shade600),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

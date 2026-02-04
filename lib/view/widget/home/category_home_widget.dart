@@ -14,8 +14,11 @@ class CategoryHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          Get.to(() => SubCategoryScreen(), arguments: {'id': data.id}),
+      onTap: () => Get.to(
+          () => SubCategoryScreen(
+                category: data,
+              ),
+          arguments: {'id': data.id}),
       child: Container(
         padding: const EdgeInsets.all(7),
         decoration: BoxDecoration(
@@ -34,9 +37,13 @@ class CategoryHomeWidget extends StatelessWidget {
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
                 ),
-                child: CacheImageWidget(
-                  image: data.imageUrl,
-                  fit: BoxFit.contain,
+                child: Hero(
+                  tag: 'category_${data.id}',
+
+                  child: CacheImageWidget(
+                    image: data.imageUrl,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
