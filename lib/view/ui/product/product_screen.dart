@@ -11,11 +11,18 @@ import '../../../core/app_color.dart';
 import '../../../core/font_style.dart';
 import '../../widget/cache_image_widget.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   final bool isCart;
   final int subCategoryId;
 
   const ProductScreen({super.key, this.isCart = true, this.subCategoryId = 0});
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +68,7 @@ class ProductScreen extends StatelessWidget {
                   onSearch: () => logic.refreshScreen(),
                 ),
               ),
-              if (isCart) _buildBrand(),
+              if (widget.isCart) _buildBrand(),
               _buildList(logic),
             ],
           );
@@ -71,9 +78,10 @@ class ProductScreen extends StatelessWidget {
   }
 
   Widget _buildBrand() {
+    print(widget.subCategoryId);
     return  Padding(
-      padding: EdgeInsets.symmetric(horizontal: 0),
-      child: BrandProductWidget(subCategoryId: subCategoryId,),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
+      child: BrandProductWidget(subCategoryId: widget.subCategoryId,),
     );
   }
 

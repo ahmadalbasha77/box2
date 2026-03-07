@@ -47,7 +47,7 @@ class SignUpController extends GetxController {
             "name": name.text,
             "userName": userName.text,
             "shopName": shopName.text,
-            "email": email.text,
+            "email": null,
             "phoneNumber": phoneNumber.text,
             "password": password.text,
             "areaId": selectedAreaId.value,

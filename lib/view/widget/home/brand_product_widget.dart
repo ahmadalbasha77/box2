@@ -5,30 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-class BrandProductWidget extends StatefulWidget {
+class BrandProductWidget extends StatelessWidget {
   final int subCategoryId;
 
   const BrandProductWidget({super.key, required this.subCategoryId});
-
-  @override
-  State<BrandProductWidget> createState() => _BrandProductWidgetState();
-}
-
-class _BrandProductWidgetState extends State<BrandProductWidget> {
-  final controller = BrandProductController.to;
-
-  @override
-  void initState() {
-    controller.subCategoryId = widget.subCategoryId;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: GetBuilder<BrandProductController>(
-        init: BrandProductController(),
+        init: BrandProductController(subCategoryId),
         builder: (logic) {
           if (logic.isLoading) {
             return _buildLoadingShimmer();
@@ -234,170 +221,3 @@ class __BrandCardState extends State<_BrandCard> {
   }
 }
 
-// Alternative: Minimal Brand Tabs
-class _MinimalBrandTabs extends StatelessWidget {
-  final dynamic brand;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _MinimalBrandTabs({
-    required this.brand,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColor.primaryColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected ? AppColor.primaryColor : Colors.grey[300]!,
-            width: 1.5,
-          ),
-        ),
-        child: Text(
-          brand.name,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : Colors.grey[700],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// Alternative: Premium Brand Cards
-class _PremiumBrandCard extends StatefulWidget {
-  final dynamic brand;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _PremiumBrandCard({
-    required this.brand,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  State<_PremiumBrandCard> createState() => __PremiumBrandCardState();
-}
-
-class __PremiumBrandCardState extends State<_PremiumBrandCard> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          width: 140,
-          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-          decoration: BoxDecoration(
-            gradient: widget.isSelected
-                ? LinearGradient(
-                    colors: [
-                      AppColor.primaryColor,
-                      AppColor.primaryColor.withOpacity(0.9),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  )
-                : LinearGradient(
-                    colors: [
-                      Colors.white,
-                      Colors.white,
-                    ],
-                  ),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: widget.isSelected ? Colors.transparent : Colors.grey[200]!,
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: widget.isSelected
-                    ? AppColor.primaryColor.withOpacity(0.3)
-                    : Colors.black.withOpacity(_isHovered ? 0.06 : 0.03),
-                blurRadius: widget.isSelected ? 20 : 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Brand Logo
-              Container(
-                width: 48,
-                height: 48,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: widget.isSelected
-                      ? Colors.white.withOpacity(0.9)
-                      : Colors.grey[50],
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: widget.isSelected
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.grey[200]!,
-                    width: 2,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Image.network(
-                    widget.brand.imageUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Icon(
-                      Icons.storefront_rounded,
-                      color: widget.isSelected
-                          ? AppColor.primaryColor
-                          : Colors.grey[600],
-                      size: 22,
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              // Brand Name
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  widget.brand.name,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: widget.isSelected ? Colors.white : Colors.black87,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

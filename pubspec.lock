@@ -262,14 +262,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
-  flutter_hms_gms_availability:
-    dependency: "direct main"
-    description:
-      name: flutter_hms_gms_availability
-      sha256: e10cf8692d6265524ede42f2f0f22af66254dd34860b59491b22b34c0327f892
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.10.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -389,14 +381,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  huawei_push:
-    dependency: "direct main"
-    description:
-      name: huawei_push
-      sha256: "6783d65050a6d4b93478c059a63f1341048cbedd1a7971803a934f4d26dc4873"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.12.0+303"
   iconsax_flutter:
     dependency: "direct main"
     description:

@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
 
                     /// حقل البريد الإلكتروني
                     CustomTextFiled(
-                      label: 'البريد الإلكتروني'.tr,
+                      label: 'رقم الهاتف او اسم المستخدم'.tr,
                       icon: Icons.email_outlined,
                       controller: _controller.email,
                     ),

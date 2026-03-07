@@ -44,9 +44,9 @@ dependencies:
   curved_navigation_bar: ^1.0.6
   infinite_scroll_pagination: ^4.1.0
 #  flutter_app_badger: ^1.5.0
-  flutter_hms_gms_availability: ^3.10.0
+#  flutter_hms_gms_availability: ^3.10.0
   flutter_local_notifications: ^17.2.2
-  huawei_push: ^6.12.0+302
+#  huawei_push: ^6.12.0+302
   firebase_messaging: ^15.2.5
   permission_handler: ^11.3.1
   device_preview: ^1.2.0

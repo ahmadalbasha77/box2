@@ -197,7 +197,7 @@ class CategoryGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const ProductScreen(), arguments: {'id': data.id});
+        Get.to(() =>  ProductScreen(subCategoryId: data.id,), arguments: {'id': data.id});
       },
       child: Container(
         padding: const EdgeInsets.all(7),
@@ -252,7 +252,7 @@ class SubCategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const ProductScreen(), arguments: {'id': data.id});
+        Get.to(() =>  ProductScreen(subCategoryId: data.id,), arguments: {'id': data.id});
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),

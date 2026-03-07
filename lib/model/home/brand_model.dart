@@ -42,11 +42,11 @@ class Result {
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        pageNumber: json["pageNumber"],
-        pageSize: json["pageSize"],
-        totalCount: json["totalCount"],
-        totalPages: json["totalPages"],
-        data: List<BrandDate>.from(
+        pageNumber: json["pageNumber"]??0,
+        pageSize: json["pageSize"]??0,
+        totalCount: json["totalCount"]??0,
+        totalPages: json["totalPages"]??0,
+        data:json["items"] == null ? [] : List<BrandDate>.from(
             json["items"].map((x) => BrandDate.fromJson(x))),
       );
 

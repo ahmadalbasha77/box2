@@ -4,20 +4,25 @@ import 'package:get/get.dart';
 import '../../model/home/brand_model.dart';
 
 class BrandProductController extends GetxController {
-  static BrandProductController get to =>
-      Get.isRegistered<BrandProductController>()
-          ? Get.find<BrandProductController>()
-          : Get.put(BrandProductController());
+  BrandProductController(this.subCategoryId);
+
+
+  final int subCategoryId;
 
   List<BrandDate> brand = [];
 
   int idSelected = -1;
-  int subCategoryId = 0;
+  // int? subCategoryId;
   bool isLoading = false;
 
   @override
   onInit() {
     super.onInit();
+    print('*************************************');
+    print('subCategoryId: $subCategoryId');
+    print('subCategoryId: $subCategoryId');
+    print('subCategoryId: $subCategoryId');
+    print('*************************************');
     getBrand();
   }
 
@@ -27,7 +32,7 @@ class BrandProductController extends GetxController {
       update();
 
       var response = await RestApi.getBrandBySubCategory(
-          pageSize: 20, pageIndex: 1, subCategoryId: idSelected);
+          pageSize: 20, pageIndex: 1, subCategoryId: subCategoryId??0);
 
       brand = [
         BrandDate(id: -1, name: 'all'.tr, imageUrl: ''),
